@@ -2,26 +2,42 @@ import {
   StyleSheet,
   Text,
   View,
-  Modal,
   TextInput,
   Pressable,
-  TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
+import Modal from "react-native-modal";
 import React, { useState } from "react";
 import PlusIcon from "../assets/svgs/plusIcon";
+import { TimePicker } from "react-native-simple-time-picker";
+const PAGE_HEIGHT = Dimensions.get("window").height;
 
 export default function CreateTaskModal({ visible, toggleModal }) {
   const [showNoteInputState, setShowNoteInputState] = useState(false);
+  const [hoursState, setHoursState] = useState(0);
+  const [minutesState, setMinutesState] = useState(0);
 
   const disableModalHandler = () => {
     toggleModal();
     setShowNoteInputState(false);
   };
+
+  const timeChangeHandler = (value) => {
+    setHoursState(value.hours);
+    setMinutesState(value.minutes);
+  };
   return (
-    <Modal visible={visible} animationType={"slide"} transparent={true}>
-      <TouchableWithoutFeedback onPress={disableModalHandler}>
-        <View style={styles.disableModal}></View>
-      </TouchableWithoutFeedback>
+    <Modal
+      isVisible={visible}
+      animationIn={"slideInDown"}
+      animationOut={"slideOutUp"}
+      animationInTiming={500}
+      animationOutTiming={500}
+      style={styles.modal}
+      onBackdropPress={disableModalHandler}
+      onBackButtonPress={disableModalHandler}
+      backdropColor="transparent"
+    >
       <View style={styles.modalContainer}>
         <View style={styles.newTasksContainer}>
           <Text style={styles.titleText}>Create Task</Text>
@@ -49,7 +65,13 @@ export default function CreateTaskModal({ visible, toggleModal }) {
           <View style={styles.durationContainer}>
             <View style={styles.duration}>
               <Text style={styles.durationText}>Duration</Text>
-              <Text style={styles.timerText}>03.30</Text>
+              <Text style={styles.timerText}>
+                {hoursState}.{minutesState}
+              </Text>
+              <TimePicker
+                value={{ hours: hoursState, minutes: minutesState }}
+                onChange={timeChangeHandler}
+              />
             </View>
           </View>
         </View>
@@ -69,19 +91,20 @@ export default function CreateTaskModal({ visible, toggleModal }) {
 }
 
 const styles = StyleSheet.create({
-  disableModal: {
-    flex: 2,
+  modal: {
     backgroundColor: "transparent",
+    justifyContent: "flex-end",
+    margin: 0,
   },
   modalContainer: {
-    flex: 3,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
+    width: "100%",
+    height: PAGE_HEIGHT / 2,
+
     borderRadius: 50,
     backgroundColor: "#01D9F7",
   },
   newTasksContainer: {
-    flex: 5,
+    flex: 6,
     padding: 20,
     borderRadius: 50,
     backgroundColor: "#fff",
@@ -130,14 +153,13 @@ const styles = StyleSheet.create({
   durationContainer: {
     alignItems: "center",
 
-    marginTop: 26,
+    marginTop: 20,
   },
   duration: {
     width: 200,
     borderColor: "#909CC6",
     borderWidth: 1,
     borderRadius: 30,
-    paddingTop: 10,
     paddingLeft: 20,
   },
   durationText: {
@@ -148,7 +170,9 @@ const styles = StyleSheet.create({
   timerText: {
     color: "#909CC6",
     fontFamily: "Poppins_500Medium",
-    fontSize: 58,
+    fontSize: 45,
+
+    textAlignVertical: "center",
   },
   buttonsContainer: {
     flex: 1,
