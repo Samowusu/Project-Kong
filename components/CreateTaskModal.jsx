@@ -36,7 +36,8 @@ export default function CreateTaskModal({ visible, toggleModal }) {
       style={styles.modal}
       onBackdropPress={disableModalHandler}
       onBackButtonPress={disableModalHandler}
-      backdropColor="transparent"
+      backdropColor="white"
+      backdropOpacity={0.3}
     >
       <View style={styles.modalContainer}>
         <View style={styles.newTasksContainer}>
@@ -65,13 +66,11 @@ export default function CreateTaskModal({ visible, toggleModal }) {
           <View style={styles.durationContainer}>
             <View style={styles.duration}>
               <Text style={styles.durationText}>Duration</Text>
-              <Text style={styles.timerText}>
-                {hoursState}.{minutesState}
-              </Text>
-              <TimePicker
+              <Text style={styles.timerText}>03.30</Text>
+              {/* <TimePicker
                 value={{ hours: hoursState, minutes: minutesState }}
                 onChange={timeChangeHandler}
-              />
+              /> */}
             </View>
           </View>
         </View>
@@ -100,7 +99,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: PAGE_HEIGHT / 2,
 
-    borderRadius: 50,
+    borderTopEndRadius: 50,
+    borderTopStartRadius: 50,
     backgroundColor: "#01D9F7",
   },
   newTasksContainer: {
@@ -184,8 +184,8 @@ const styles = StyleSheet.create({
   },
   addTaskButton: {
     backgroundColor: "#fff",
-    paddingVertical: 10,
-    paddingHorizontal: 50,
+    paddingVertical: 5,
+    paddingHorizontal: 30,
     borderRadius: 30,
   },
 });
