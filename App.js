@@ -24,7 +24,8 @@ import {
   Poppins_900Black,
   Poppins_900Black_Italic,
 } from "@expo-google-fonts/poppins";
-import CreateTaskModal from "./components/CreateTaskModal";
+import { SafeContainer } from "./src/screens/Landing/LandingStyles";
+import Landing from "./src/screens/Landing/Landing";
 
 export default function App() {
   const [showModalState, setShowModalState] = useState(false);
@@ -49,44 +50,29 @@ export default function App() {
     Poppins_900Black_Italic,
   });
 
-  const toggleModalHandler = () => {
-    setShowModalState((prevState) => !prevState);
-  };
-
   if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.descriptionText}>A clean slate!</Text>
-      <Text
-        style={{ ...styles.descriptionText, fontFamily: "Poppins_600SemiBold" }}
-      >
-        Let's find something to do...
-      </Text>
-      <Calendar />
-      <Tasks onPress={toggleModalHandler} />
-      <CreateTaskModal
-        visible={showModalState}
-        toggleModal={toggleModalHandler}
-      />
-    </View>
+    <SafeContainer>
+      <Landing />
+    </SafeContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    marginTop: StatusBar.currentHeight,
-    paddingTop: 10,
-    paddingLeft: 20,
-  },
-  descriptionText: {
-    color: "#707070",
-    fontSize: 22,
-    textAlign: "left",
-    fontFamily: "Poppins_400Regular",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     marginTop: StatusBar.currentHeight,
+//     paddingTop: 10,
+//     paddingLeft: 20,
+//   },
+//   descriptionText: {
+//     color: "#707070",
+//     fontSize: 22,
+//     textAlign: "left",
+//     fontFamily: "Poppins_400Regular",
+//   },
+// });
