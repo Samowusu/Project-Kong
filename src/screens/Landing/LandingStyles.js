@@ -12,7 +12,7 @@ export const Container = styled.View`
 `;
 
 export const Txt = styled.Text`
-  color: "#707070";
+  color: #707070;
   font-size: 16px;
   text-align: left;
   font-family: Poppins_400Regular;

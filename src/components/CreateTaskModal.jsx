@@ -1,125 +1,87 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Pressable,
-  Dimensions,
-} from "react-native";
-import Modal from "react-native-modal";
+import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
 import React, { useState } from "react";
-import PlusIcon from "../assets/svgs/plusIcon";
-import { TimePicker } from "react-native-simple-time-picker";
-const PAGE_HEIGHT = Dimensions.get("window").height;
+import ActionModal from "./ActionModal";
+import PlusIcon from "../../assets/svgs/plusIcon";
 
-export default function CreateTaskModal({ visible, toggleModal }) {
+CreateTaskModal.defaultProps = {
+  visible: true,
+  toggleCreateTaskModal: () => {
+    console.log("toggle create task modal");
+  },
+  toggleTimePickerModal: () => {
+    console.log("toggle time picker modal");
+  },
+  hour: "03",
+  minute: "30",
+};
+
+export default function CreateTaskModal({
+  visible,
+  toggleCreateTaskModal,
+  toggleTimePickerModal,
+  hour,
+  minute,
+}) {
   const [showNoteInputState, setShowNoteInputState] = useState(false);
-  const [hoursState, setHoursState] = useState(0);
-  const [minutesState, setMinutesState] = useState(0);
 
-  const disableModalHandler = () => {
-    toggleModal();
+  const toggleCreateTaskModalHandler = () => {
+    toggleCreateTaskModal();
     setShowNoteInputState(false);
   };
 
-  const timeChangeHandler = (value) => {
-    setHoursState(value.hours);
-    setMinutesState(value.minutes);
+  const toggleTimePickerModalHandler = () => {
+    toggleTimePickerModal();
   };
   return (
-    <Modal
-      isVisible={visible}
-      animationIn={"slideInDown"}
-      animationOut={"slideOutUp"}
-      animationInTiming={500}
-      animationOutTiming={500}
-      style={styles.modal}
-      onBackdropPress={disableModalHandler}
-      onBackButtonPress={disableModalHandler}
-      backdropColor="white"
-      backdropOpacity={0.3}
+    <ActionModal
+      visible={visible}
+      toggleModal={toggleCreateTaskModalHandler}
+      modalHeight={2}
+      title="Create Task"
+      firstButtonText={"delete"}
+      secondButtonText={"add task"}
+      buttons
     >
-      <View style={styles.modalContainer}>
-        <View style={styles.newTasksContainer}>
-          <Text style={styles.titleText}>Create Task</Text>
-          <View style={styles.inputContainer}>
-            <TextInput placeholder="Title" style={styles.inputTitleText} />
-            {showNoteInputState && (
-              <TextInput
-                placeholder="Enter note..."
-                style={styles.inputNotesText}
-                multiline={true}
-                numberOfLines={4}
-              />
-            )}
-          </View>
-          {!showNoteInputState && (
-            <Pressable
-              onPress={() => setShowNoteInputState((prevState) => !prevState)}
-            >
-              <View style={styles.addNoteButton}>
-                <PlusIcon />
-                <Text style={styles.addNoteButtonText}>Add note</Text>
-              </View>
-            </Pressable>
-          )}
-          <View style={styles.durationContainer}>
-            <View style={styles.duration}>
-              <Text style={styles.durationText}>Duration</Text>
-              <Text style={styles.timerText}>03.30</Text>
-              {/* <TimePicker
-                value={{ hours: hoursState, minutes: minutesState }}
-                onChange={timeChangeHandler}
-              /> */}
-            </View>
-          </View>
-        </View>
-        <View style={styles.buttonsContainer}>
-          <Pressable>
-            <Text style={{ ...styles.titleText, color: "#fff" }}>DELETE</Text>
-          </Pressable>
-          <Pressable>
-            <View style={styles.addTaskButton}>
-              <Text style={styles.titleText}>Add Task</Text>
-            </View>
-          </Pressable>
-        </View>
+      <View style={styles.inputContainer}>
+        <TextInput placeholder="Title" style={styles.inputTitleText} />
+        {showNoteInputState && (
+          <TextInput
+            placeholder="Enter note..."
+            style={styles.inputNotesText}
+            multiline={true}
+            numberOfLines={4}
+          />
+        )}
       </View>
-    </Modal>
+      {!showNoteInputState && (
+        <Pressable
+          onPress={() => setShowNoteInputState((prevState) => !prevState)}
+        >
+          <View style={styles.addNoteButton}>
+            <PlusIcon />
+            <Text style={styles.addNoteButtonText}>Add note</Text>
+          </View>
+        </Pressable>
+      )}
+      <View style={styles.durationContainer}>
+        <Pressable onPress={toggleTimePickerModalHandler}>
+          <View style={styles.duration}>
+            <Text style={styles.durationText}>Duration</Text>
+            <Text style={styles.timerText}>
+              {hour}·{minute}
+            </Text>
+          </View>
+        </Pressable>
+      </View>
+    </ActionModal>
   );
 }
 
 const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: "transparent",
-    justifyContent: "flex-end",
-    margin: 0,
-  },
-  modalContainer: {
-    width: "100%",
-    height: PAGE_HEIGHT / 2,
-
-    borderTopEndRadius: 50,
-    borderTopStartRadius: 50,
-    backgroundColor: "#01D9F7",
-  },
-  newTasksContainer: {
-    flex: 6,
-    padding: 20,
-    borderRadius: 50,
-    backgroundColor: "#fff",
-  },
-  titleText: {
-    fontSize: 21,
-    fontFamily: "Poppins_500Medium",
-    color: "#01D9F7",
-    textTransform: "uppercase",
-  },
   inputContainer: {
     backgroundColor: "rgba(242, 242, 242, 0.5)",
     borderRadius: 20,
     padding: 15,
-    marginTop: 20,
   },
 
   inputTitleText: {
@@ -152,11 +114,12 @@ const styles = StyleSheet.create({
   },
   durationContainer: {
     alignItems: "center",
-
+    // borderWidth: 1,
+    // borderColor: "red",
     marginTop: 20,
   },
   duration: {
-    width: 200,
+    width: 150,
     borderColor: "#909CC6",
     borderWidth: 1,
     borderRadius: 30,
@@ -173,19 +136,5 @@ const styles = StyleSheet.create({
     fontSize: 45,
 
     textAlignVertical: "center",
-  },
-  buttonsContainer: {
-    flex: 1,
-    borderRadius: 50,
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    flexDirection: "row",
-    paddingVertical: 10,
-  },
-  addTaskButton: {
-    backgroundColor: "#fff",
-    paddingVertical: 5,
-    paddingHorizontal: 30,
-    borderRadius: 30,
   },
 });

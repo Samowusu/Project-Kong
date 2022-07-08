@@ -3,6 +3,8 @@ import React from "react";
 import DateCard from "../../components/DateCard";
 import Calendar from "../../components/Calendar";
 import Tasks from "../../components/Tasks";
+import ActionModal from "../../components/ActionModal";
+import TimePickerModal from "../../components/TimePickerModal";
 import CreateTaskModal from "../../components/CreateTaskModal";
 
 export default function Glossary() {
@@ -11,6 +13,8 @@ export default function Glossary() {
       <DateCard />
       <Calendar />
       <Tasks />
+      <ActionModal />
+      <TimePickerModal />
       <CreateTaskModal />
     </View>
   );

@@ -1,8 +1,6 @@
 // import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
-import React, { useState } from "react";
-import Calendar from "./components/Calendar";
-import Tasks from "./components/Tasks";
+import React from "react";
+import { View, StyleSheet, StatusBar } from "react-native";
 import {
   useFonts,
   Poppins_100Thin,
@@ -28,7 +26,6 @@ import { SafeContainer } from "./src/screens/Landing/LandingStyles";
 import Landing from "./src/screens/Landing/Landing";
 
 export default function App() {
-  const [showModalState, setShowModalState] = useState(false);
   let [fontsLoaded] = useFonts({
     Poppins_100Thin,
     Poppins_100Thin_Italic,
@@ -55,24 +52,22 @@ export default function App() {
   }
 
   return (
-    <SafeContainer>
+    <View style={styles.container}>
       <Landing />
-    </SafeContainer>
+    </View>
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     marginTop: StatusBar.currentHeight,
-//     paddingTop: 10,
-//     paddingLeft: 20,
-//   },
-//   descriptionText: {
-//     color: "#707070",
-//     fontSize: 22,
-//     textAlign: "left",
-//     fontFamily: "Poppins_400Regular",
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    marginTop: StatusBar.currentHeight,
+  },
+  //   //   descriptionText: {
+  //   //     color: "#707070",
+  //   //     fontSize: 22,
+  //   //     textAlign: "left",
+  //   //     fontFamily: "Poppins_400Regular",
+  //   //   },
+});

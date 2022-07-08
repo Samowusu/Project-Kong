@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 DateCard.defaultProps = {
+  index: 1,
   dates: {
     date: "2",
     month: "May",

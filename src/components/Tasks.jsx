@@ -1,12 +1,22 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React from "react";
-import AddIcon from "../assets/svgs/addIcon";
+import AddIcon from "../../assets/svgs/addIcon";
+
+Tasks.defaultProps = {
+  onPress: () => {
+    console.log("pressed");
+  },
+};
+
 export default function Tasks({ onPress }) {
   return (
     <View style={styles.container}>
       <Pressable onPress={onPress}>
         <View style={styles.imageContainer}>
-          <Image source={require("../assets/todo.png")} style={styles.image} />
+          <Image
+            source={require("../../assets/todo.png")}
+            style={styles.image}
+          />
         </View>
         <Text style={styles.taskText}>CLICK TO ADD TASKS</Text>
       </Pressable>
