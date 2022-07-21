@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import DateCard from "./DateCard";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
+import { Theme } from "../theme/default";
 
 export default function Calendar() {
   const [datesState, setDatesState] = useState([]);
@@ -53,9 +54,9 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   calendarText: {
-    fontSize: 18,
+    fontSize: Theme.fonts.m,
     fontFamily: "Poppins_400Regular",
-    color: "#707070",
+    color: Theme.colors.monoDark,
   },
   cardList: {
     marginTop: 17,

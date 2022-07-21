@@ -1,6 +1,37 @@
-import { StyleSheet, Text, View, Pressable, Image } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Image,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
+import DraggableFlatList, {
+  ScaleDecorator,
+} from "react-native-draggable-flatlist";
 import AddIcon from "../../assets/svgs/addIcon";
+import { TxtBold } from "../screens/Landing/LandingStyles";
+import TaskItem, { MovableTask, TASK_ITEM_HEIGHT } from "./TaskItem";
+import { Theme } from "../theme/default";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+const DUMMY_TASKS = [
+  { title: "Task 1", key: "one" },
+  { title: "Task 2", key: "two" },
+  { title: "Task 3", key: "three" },
+  { title: "Task 4", key: "four" },
+  { title: "Task 5", key: "five" },
+  { title: "Task 6", key: "six" },
+  { title: "Task 7", key: "seven" },
+  { title: "Task 8", key: "eight" },
+  { title: "Task 9", key: "nine" },
+  { title: "Task 10", key: "ten" },
+  { title: "Task 11", key: "eleven" },
+  { title: "Task 12", key: "twelve" },
+  { title: "Task 13", key: "thirteen" },
+];
 
 Tasks.defaultProps = {
   onPress: () => {
@@ -9,9 +40,19 @@ Tasks.defaultProps = {
 };
 
 export default function Tasks({ onPress }) {
+  const [tasksDataState, setTasksDataState] = useState(DUMMY_TASKS);
+
+  const renderItem = ({ item, drag, isActive }) => {
+    return (
+      <ScaleDecorator>
+        <TaskItem title={item.title} drag={drag} isActive={isActive} />
+      </ScaleDecorator>
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      <Pressable onPress={onPress}>
+    <GestureHandlerRootView style={styles.container}>
+      {/* <Pressable onPress={onPress}>
         <View style={styles.imageContainer}>
           <Image
             source={require("../../assets/todo.png")}
@@ -19,23 +60,47 @@ export default function Tasks({ onPress }) {
           />
         </View>
         <Text style={styles.taskText}>CLICK TO ADD TASKS</Text>
-      </Pressable>
-      <Pressable onPress={onPress}>
-        <View style={styles.buttonContainer}>
+      </Pressable> */}
+      <View style={styles.tasksList}>
+        <View style={styles.tasksListTitles}>
+          <TxtBold color={"#909CC6"}>TODO</TxtBold>
+          <Pressable onPress={() => console.log("pressed")}>
+            <TxtBold color={"#01D9F7"}>SELECT</TxtBold>
+          </Pressable>
+        </View>
+        <View style={styles.tasksContainer}>
+          <DraggableFlatList
+            data={tasksDataState}
+            onDragEnd={({ data }) => {
+              setTasksDataState(data);
+            }}
+            keyExtractor={(item) => item.key}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+      </View>
+      <View style={{ ...styles.buttonContainer, ...styles.boxWithShadow }}>
+        <Pressable onPress={onPress}>
           <View style={{ ...styles.button, ...styles.boxWithShadow }}>
             <AddIcon />
           </View>
-        </View>
-      </Pressable>
-    </View>
+        </Pressable>
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
+    // borderWidth: 1,
+    // borderColor: "red",
+    flex: 1,
+    position: "relative",
+    backgroundColor: Theme.colors.monoLight200,
   },
   imageContainer: {
     width: 250,
@@ -50,34 +115,58 @@ const styles = StyleSheet.create({
   taskText: {
     marginTop: 10,
     textAlign: "center",
-    color: "#909CC6",
+    color: Theme.colors.secondaryDark200,
     fontFamily: "Poppins_500Medium",
-    fontSize: 21,
+    fontSize: Theme.fonts.l,
+  },
+  tasksList: {
+    // borderWidth: 1,
+    // borderColor: "black",
+    width: "100%",
+    height: "100%",
+    paddingHorizontal: 15,
+  },
+  tasksListTitles: {
+    // borderWidth: 1,
+    // borderColor: "green",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  tasksContainer: {
+    flex: 1,
+    // borderWidth: 1,
+    // borderColor: "green",
   },
 
   buttonContainer: {
-    marginTop: 10,
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
+    // borderWidth: 1,
+    // borderColor: "black",
+    position: "absolute",
+    left: "40%",
+    bottom: "5%",
+    borderRadius: 100,
+    zIndex: 100,
   },
   button: {
-    backgroundColor: "#01D9F7",
-    width: "90%",
-    height: "90%",
+    backgroundColor: Theme.colors.primary,
+    width: "100%",
+    height: "100%",
     borderRadius: 100,
     justifyContent: "center",
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: Theme.colors.monoLight,
   },
   boxWithShadow: {
     shadowColor: "rgba(5, 218, 247, 0.729)",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 1,
-    shadowRadius: 2,
-    elevation: 10,
+    shadowOffset: { width: 0, height: 7 },
+    shadowOpacity: 0.41,
+    shadowRadius: 9.11,
+    elevation: 8,
   },
 });

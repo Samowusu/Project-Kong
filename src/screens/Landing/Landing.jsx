@@ -5,14 +5,17 @@ import Calendar from "../../components/Calendar";
 import Tasks from "../../components/Tasks";
 import CreateTaskModal from "../../components/CreateTaskModal";
 import TimePickerModal from "../../components/TimePickerModal";
-import Scroller from "../../components/Scroller";
+import Scroller from "../../components/Scroll";
 import DateCard from "../../components/DateCard";
 import ActionModal from "../../components/ActionModal";
+import Scroll, { DoubleScroller } from "../../components/Scroller";
+import TaskItem from "../../components/TaskItem";
+import Glossary from "../Glossary/Glossary";
 
 export default function Landing() {
   const [showCreateTaskModalState, setShowCreateTaskModalState] =
-    useState(true);
-  const [showTimePickerModal, setShowTimePickerModal] = useState(true);
+    useState(false);
+  const [showTimePickerModal, setShowTimePickerModal] = useState(false);
   const [selectedHourState, setSelectedHourState] = useState("03");
   const [selectedMinuteState, setSelectedMinuteState] = useState("30");
 
@@ -32,12 +35,13 @@ export default function Landing() {
     setShowTimePickerModal((prevState) => !prevState);
   };
 
+  return <Glossary />;
   return (
     <Container>
-      {/* <Txt>A clean slate!</Txt>
+      <Txt>A clean slate!</Txt>
       <TxtBold>Let's find something to do...</TxtBold>
       <Calendar />
-      <Tasks onPress={toggleCreateTaskModalHandler} /> */}
+      <Tasks onPress={toggleCreateTaskModalHandler} />
       <CreateTaskModal
         toggleCreateTaskModal={toggleCreateTaskModalHandler}
         visible={showCreateTaskModalState}

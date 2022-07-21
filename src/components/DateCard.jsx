@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { Theme } from "../theme/default";
 
 DateCard.defaultProps = {
   index: 1,
@@ -14,10 +15,16 @@ export default function DateCard({ index, dates: { date, month, day } }) {
   return (
     <View style={styles.cardContainer(index)}>
       <View style={styles.cardContents}>
-        <Text style={{ ...styles.dateText(index), fontSize: 30 }}>{date}</Text>
-        <Text style={{ ...styles.dateText(index), fontSize: 18 }}>{month}</Text>
+        <Text style={{ ...styles.dateText(index), fontSize: Theme.fonts.xxl }}>
+          {date}
+        </Text>
+        <Text style={{ ...styles.dateText(index), fontSize: Theme.fonts.m }}>
+          {month}
+        </Text>
         <View style={styles.borderLine(index)}></View>
-        <Text style={{ ...styles.dateText(index), fontSize: 18 }}>{day}</Text>
+        <Text style={{ ...styles.dateText(index), fontSize: Theme.fonts.m }}>
+          {day}
+        </Text>
       </View>
     </View>
   );
@@ -26,8 +33,8 @@ export default function DateCard({ index, dates: { date, month, day } }) {
 const styles = StyleSheet.create({
   cardContainer: (index) => {
     const condition = index == 1;
-    const border = condition ? "#01D9F7" : "#647AFE";
-    const bgColor = condition ? "#01D9F7" : "#A4B0FF";
+    const border = condition ? Theme.colors.primary : Theme.colors.secondary;
+    const bgColor = condition ? Theme.colors.primary : "#A4B0FF";
 
     return {
       borderWidth: 5,
@@ -46,7 +53,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   dateText: (index) => {
-    const textColor = index == 1 ? "#fff" : "#707070";
+    const textColor =
+      index == 1 ? Theme.colors.monoLight : Theme.colors.monoDark200;
 
     return {
       fontFamily: "Poppins_400Regular",
@@ -56,7 +64,8 @@ const styles = StyleSheet.create({
   },
 
   borderLine: (index) => {
-    const border = index == 1 ? "#fff" : "#707070";
+    const border =
+      index == 1 ? Theme.colors.monoLight : Theme.colors.monoDark200;
 
     return {
       borderWidth: 1,

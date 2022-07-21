@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
+import { Theme } from "../theme/default";
 
 ActionModal.defaultProps = {
   children: <Text>Welcome to the Action Modal</Text>,
@@ -48,7 +49,12 @@ export default function ActionModal({
         <View style={styles.titleTextContainer}>
           <Text style={styles.titleText}>{title}</Text>
           {duration && (
-            <Text style={{ ...styles.titleText, color: "#909CC6" }}>
+            <Text
+              style={{
+                ...styles.titleText,
+                color: Theme.colors.secondaryDark200,
+              }}
+            >
               ·select duration
             </Text>
           )}
@@ -58,7 +64,9 @@ export default function ActionModal({
         {buttons && (
           <View style={styles.buttonsContainer}>
             <Pressable>
-              <Text style={{ ...styles.titleText, color: "#fff" }}>
+              <Text
+                style={{ ...styles.titleText, color: Theme.colors.monoLight }}
+              >
                 {firstButtonText}
               </Text>
             </Pressable>
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
 
       borderTopEndRadius: 50,
       borderTopStartRadius: 50,
-      backgroundColor: "#01D9F7",
+      backgroundColor: Theme.colors.primary,
       // borderWidth: 2,
       // borderColor: "blue",
     };
@@ -103,20 +111,20 @@ const styles = StyleSheet.create({
     // borderColor: "red",
     paddingTop: 20,
     paddingLeft: 20,
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.monoLight,
     borderTopEndRadius: 50,
     borderTopStartRadius: 50,
     flexDirection: "row",
   },
   titleText: {
-    fontSize: 21,
+    fontSize: Theme.fonts.l,
     fontFamily: "Poppins_500Medium",
-    color: "#01D9F7",
+    color: Theme.colors.primary,
     textTransform: "uppercase",
   },
   modalContents: {
     flex: 7,
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.monoLight,
     // borderWidth: 2,
     // borderColor: "black",
     borderBottomEndRadius: 50,
@@ -132,10 +140,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 10,
     paddingHorizontal: 30,
-    backgroundColor: "#01D9F7",
+    backgroundColor: Theme.colors.primary,
   },
   addTaskButton: {
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.monoLight,
     paddingVertical: 5,
     paddingHorizontal: 30,
     borderRadius: 30,

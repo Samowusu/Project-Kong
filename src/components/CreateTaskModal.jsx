@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
 import React, { useState } from "react";
 import ActionModal from "./ActionModal";
 import PlusIcon from "../../assets/svgs/plusIcon";
+import { Theme } from "../theme/default";
 
 CreateTaskModal.defaultProps = {
   visible: true,
@@ -85,15 +86,15 @@ const styles = StyleSheet.create({
   },
 
   inputTitleText: {
-    color: "#909CC6",
-    fontSize: 21,
+    color: Theme.colors.secondaryDark,
+    fontSize: Theme.fonts.l,
     fontFamily: "Poppins_500Medium",
     // borderBottomColor: "rgba(112, 112, 112, 0.19)",
     // borderBottomWidth: 1,
   },
   inputNotesText: {
     color: "rgba(0, 0, 0, 0.27)",
-    fontSize: 16,
+    fontSize: Theme.fonts.m,
     fontFamily: "Poppins_500Medium",
   },
   addNoteButton: {
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   addNoteButtonText: {
-    color: "#909CC6",
+    color: Theme.colors.secondaryDark200,
     fontSize: 20,
     fontFamily: "Poppins_500Medium",
     textTransform: "uppercase",
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   },
   duration: {
     width: 150,
-    borderColor: "#909CC6",
+    borderColor: Theme.colors.secondaryDark200,
     borderWidth: 1,
     borderRadius: 30,
     paddingLeft: 20,
@@ -128,12 +129,12 @@ const styles = StyleSheet.create({
   durationText: {
     color: "rgba(0, 0, 0, 0.27)",
     fontFamily: "Poppins_500Medium",
-    fontSize: 16,
+    fontSize: Theme.fonts.m,
   },
   timerText: {
-    color: "#909CC6",
+    color: Theme.colors.secondaryDark200,
     fontFamily: "Poppins_500Medium",
-    fontSize: 45,
+    fontSize: Theme.fonts.xxxl,
 
     textAlignVertical: "center",
   },

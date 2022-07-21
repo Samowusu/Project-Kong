@@ -5,18 +5,30 @@ import {
   Dimensions,
   ScrollView,
   Pressable,
+  Image,
 } from "react-native";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, forwardRef, memo } from "react";
 import ActionModal from "./ActionModal";
+import { Txt } from "../screens/Landing/LandingStyles";
+import { DoubleScroller } from "./Scroller";
+import { Theme } from "../theme/default";
 
 TimePickerModal.defaultProps = {
   visible: true,
   toggleModal: () => {
     console.log("toggle modal");
   },
+  onChangeHour: () => {
+    console.log("change hour");
+  },
+  onChangeMinute: () => {
+    console.log("change minute");
+  },
 };
 
-const ITEM_HEIGHT = 60;
+const { height } = Dimensions.get("window");
+const ITEM_HEIGHT = 70;
+const scrollsContainerHeight = height / 2;
 const hoursData = ["00", "01", "02", "03", "04", "05", "06"];
 const minutesData = ["00", "15", "30", "45"];
 
@@ -26,29 +38,16 @@ export default function TimePickerModal({
   onChangeHour,
   onChangeMinute,
 }) {
-  const [selectedHourIndexState, setSelectedHourIndexState] = useState(0);
-  const [selectedMinuteIndexState, setSelectedMinuteIndexState] = useState(0);
-  const hourRef = useRef();
-  const minuteRef = useRef();
+  const [selectedHourIndexState, setSelectedHourIndexState] = useState("03");
+  const [selectedMinuteIndexState, setSelectedMinuteIndexState] =
+    useState("30");
 
-  const setDurationHandler = (selectedHourIndex, selectedMinuteIndex) => {
-    onChangeHour(hoursData[selectedHourIndex]);
-    onChangeMinute(minutesData[selectedMinuteIndex]);
+  const setDurationHandler = (selectedHour, selectedMinute) => {
+    onChangeHour(selectedHour);
+    onChangeMinute(selectedMinute);
     toggleModal();
   };
 
-  const scrollToMinute = (index) => {
-    minuteRef.current?.scrollTo({ y: index * 43.04 - 5 });
-  };
-
-  const scrollToHour = (index) => {
-    hourRef.current?.scrollTo({ y: index * 47.714 - 5 });
-  };
-
-  useEffect(() => {
-    scrollToHour(4);
-    scrollToMinute(3);
-  }, []);
   return (
     <ActionModal
       modalHeight={1.2}
@@ -65,50 +64,12 @@ export default function TimePickerModal({
           <Text style={styles.titleText}>MM</Text>
         </View>
         <View style={styles.scrollsContainer}>
-          <ScrollView
-            ref={hourRef}
-            showsVerticalScrollIndicator={false}
-            style={{
-              ...styles.hoursScrollView,
-              borderBottomLeftRadius: 10,
-              borderTopLeftRadius: 10,
-            }}
-            onMomentumScrollEnd={(e) => {
-              const currentIndex = Math.round(
-                e.nativeEvent.contentOffset.y / ITEM_HEIGHT
-              );
-              setSelectedHourIndexState(currentIndex);
-            }}
-          >
-            {hoursData.map((hour) => (
-              <Text style={styles.texts} key={hour}>
-                {hour}
-              </Text>
-            ))}
-          </ScrollView>
-          <ScrollView
-            ref={minuteRef}
-            style={{
-              ...styles.hoursScrollView,
-              borderLeftWidth: 0,
-              borderRightWidth: 1,
-              borderTopRightRadius: 10,
-              borderBottomRightRadius: 10,
-            }}
-            showsVerticalScrollIndicator={false}
-            onMomentumScrollEnd={(e) => {
-              const currentIndex = Math.round(
-                e.nativeEvent.contentOffset.y / ITEM_HEIGHT
-              );
-              setSelectedMinuteIndexState(currentIndex);
-            }}
-          >
-            {minutesData.map((min) => (
-              <Text style={styles.texts} key={min}>
-                {min}
-              </Text>
-            ))}
-          </ScrollView>
+          <DoubleScroller
+            hours={hoursData}
+            minutes={minutesData}
+            onChangeHour={(val) => setSelectedHourIndexState(val)}
+            onChangeMinute={(val) => setSelectedMinuteIndexState(val)}
+          />
         </View>
         <Pressable
           onPress={() =>
@@ -129,10 +90,11 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     // borderColor: "black",
     alignItems: "center",
+    paddingTop: 60,
   },
   titleContainer: {
     borderBottomWidth: 1,
-    borderColor: "#707070",
+    borderColor: Theme.colors.monoDark,
     flexDirection: "row",
     width: "50%",
     justifyContent: "space-evenly",
@@ -141,41 +103,46 @@ const styles = StyleSheet.create({
   titleText: {
     color: "rgba(0, 0, 0, 0.27)",
     fontFamily: "Poppins_500Medium",
-    fontSize: 16,
+    fontSize: Theme.fonts.m,
   },
   scrollsContainer: {
     // borderWidth: 1,
     // borderColor: "green",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    width: "100%",
+
     width: "50%",
     overflow: "hidden",
-    height: 450,
+    height: scrollsContainerHeight,
   },
-  hoursScrollView: {
+
+  pointer: {
+    position: "absolute",
+    top: scrollsContainerHeight / 2 - ITEM_HEIGHT / 2,
     borderWidth: 1,
-    borderColor: "#909CC6",
+    width: "100%",
     height: ITEM_HEIGHT,
-    overflow: "visible",
-    marginTop: 190,
-    borderRightWidth: 0,
+    borderColor: Theme.colors.secondaryDark200,
+
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 20,
   },
 
   texts: {
-    color: "#909CC6",
+    color: Theme.colors.secondaryDark200,
     fontFamily: "Poppins_500Medium",
-    fontSize: 40,
+    fontSize: Theme.fonts.xxxl,
     textAlign: "center",
   },
   setDurationButton: {
     // borderWidth: 1,
     // borderColor: "black",
-    marginTop: 60,
+    marginTop: 50,
   },
   setDurationButtonText: {
-    color: "#01D9F7",
+    color: Theme.colors.primary,
     fontFamily: "Poppins_500Medium",
-    fontSize: 21,
+    fontSize: Theme.fonts.l,
     textTransform: "uppercase",
   },
 });

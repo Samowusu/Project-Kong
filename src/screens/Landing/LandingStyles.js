@@ -1,19 +1,20 @@
 import styled from "styled-components/native";
+import { Theme } from "../../theme/default";
 
 export const SafeContainer = styled.SafeAreaView`
   flex: 1;
-  background-color: #fff;
+  background-color: ${Theme.colors.monoLight};
 `;
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #fafbfe;
-  padding: 10px 20px;
+  background-color: ${Theme.colors.monoLight200};
+  padding: 10px 25px;
 `;
 
 export const Txt = styled.Text`
-  color: #707070;
-  font-size: 16px;
+  color: ${(props) => props.color ?? Theme.colors.monoDark200};
+  font-size: ${`${Theme.fonts.m}px`};
   text-align: left;
   font-family: Poppins_400Regular;
 `;

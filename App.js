@@ -1,6 +1,7 @@
 // import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   useFonts,
   Poppins_100Thin,
