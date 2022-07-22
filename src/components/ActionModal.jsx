@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   },
   addTaskButton: {
     backgroundColor: Theme.colors.monoLight,
-    paddingVertical: 5,
+    paddingVertical: 8,
     paddingHorizontal: 30,
     borderRadius: 30,
   },

@@ -8,9 +8,10 @@ import TimePickerModal from "../../components/TimePickerModal";
 import CreateTaskModal from "../../components/CreateTaskModal";
 import TaskItem from "../../components/TaskItem";
 import RadioItem from "../../components/RadioItem";
+import StartSessionModal from "../../components/StartSessionModal";
 
 export default function Glossary() {
-  return <Tasks />;
+  return <StartSessionModal />;
   return (
     <View>
       <DateCard />
@@ -21,6 +22,7 @@ export default function Glossary() {
       <ActionModal />
       <TimePickerModal />
       <CreateTaskModal />
+      <StartSessionModal />
     </View>
   );
 }

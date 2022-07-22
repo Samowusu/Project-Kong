@@ -11,6 +11,8 @@ export const Theme = {
     monoDark200: "#707070",
     monoLight: "#fff",
     monoLight200: "#FAFBFE",
+    crimson: "#F4456D",
+    greyText: "rgba(0,0,0,0.27)",
   },
   fonts: {
     s: 14,

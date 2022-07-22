@@ -39,7 +39,7 @@ export default function CreateTaskModal({
       toggleModal={toggleCreateTaskModalHandler}
       modalHeight={2}
       title="Create Task"
-      firstButtonText={"delete"}
+      firstButtonText={"cancel"}
       secondButtonText={"add task"}
       buttons
     >

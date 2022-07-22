@@ -1,10 +1,11 @@
 import { StyleSheet, View, Image, Pressable } from "react-native";
 import React, { useState } from "react";
 import { Txt, TxtBold } from "../screens/Landing/LandingStyles";
-
+import styled from "styled-components/native";
 import { Theme } from "../theme/default";
 import RadioItem from "./RadioItem";
 import DragHandleIcon from "../../assets/svgs/dragHandleIcon";
+import DotIcon from "../../assets/svgs/dotIcon";
 
 export const TASK_ITEM_HEIGHT = 70;
 
@@ -15,13 +16,16 @@ TaskItem.defaultProps = {
   notes:
     "Task Items Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi neque deleniti facilis, deserunt eos debitis inventore temporibus unde numquam! Iure, repellat perferendis? Nam, sequi. Facere reiciendis saepe tenetur nostrum cumque.",
 };
-export default function TaskItem({ title, drag, isActive, notes }) {
+export default function TaskItem({
+  title,
+  drag,
+  isActive,
+  notes,
+  selectTasks,
+  checkTaskHandler,
+  selected,
+}) {
   const [showNoteState, setShowNoteState] = useState(false);
-  const [selectedState, setSelectedState] = useState(false);
-
-  const checkTaskHandler = () => {
-    setSelectedState((prevState) => !prevState);
-  };
 
   return (
     <View style={styles.mainContainer}>
@@ -34,13 +38,14 @@ export default function TaskItem({ title, drag, isActive, notes }) {
           <View style={styles.titleTextContainer}>
             <Txt color={Theme.colors.secondaryDark}>{title}</Txt>
 
-            {showNoteState && (
-              <TxtBold color={Theme.colors.secondaryDark}>·</TxtBold>
-            )}
+            {showNoteState && <DotIcon />}
             {showNoteState && <Txt color={Theme.colors.monoDark}>1.5h</Txt>}
           </View>
-          <DragHandleIcon />
-          {/* <RadioItem onChange={checkTaskHandler} selected={selectedState} /> */}
+          {selectTasks ? (
+            <RadioItem onChange={checkTaskHandler} selected={selected} />
+          ) : (
+            <DragHandleIcon />
+          )}
         </View>
         {showNoteState && (
           <View style={styles.taskNotesContainer}>
@@ -74,6 +79,7 @@ const styles = StyleSheet.create({
     minWidth: 90,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   taskDurationContainer: {
     flexDirection: "row",
@@ -83,3 +89,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+export const TitleTextContainer = styled.View`
+  width: 100px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;

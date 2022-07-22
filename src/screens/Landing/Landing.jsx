@@ -11,6 +11,7 @@ import ActionModal from "../../components/ActionModal";
 import Scroll, { DoubleScroller } from "../../components/Scroller";
 import TaskItem from "../../components/TaskItem";
 import Glossary from "../Glossary/Glossary";
+import StartSessionModal from "../../components/StartSessionModal";
 
 export default function Landing() {
   const [showCreateTaskModalState, setShowCreateTaskModalState] =
@@ -35,7 +36,7 @@ export default function Landing() {
     setShowTimePickerModal((prevState) => !prevState);
   };
 
-  return <Glossary />;
+  return <StartSessionModal />;
   return (
     <Container>
       <Txt>A clean slate!</Txt>

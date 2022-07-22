@@ -16,6 +16,8 @@ import { TxtBold } from "../screens/Landing/LandingStyles";
 import TaskItem, { MovableTask, TASK_ITEM_HEIGHT } from "./TaskItem";
 import { Theme } from "../theme/default";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import DotIcon from "../../assets/svgs/dotIcon";
+import PlayIcon from "../../assets/svgs/playIcon";
 
 const DUMMY_TASKS = [
   { title: "Task 1", key: "one" },
@@ -41,11 +43,32 @@ Tasks.defaultProps = {
 
 export default function Tasks({ onPress }) {
   const [tasksDataState, setTasksDataState] = useState(DUMMY_TASKS);
+  const [chooseTasksState, setChooseTasksState] = useState(false);
+  const [selectedTasksState, setSelectedTasksState] = useState([]);
 
+  const selectTaskHandler = (value) => {
+    setSelectedTasksState((prevState) => {
+      const found = prevState.find((taskId) => taskId === value);
+      if (found) {
+        return prevState.filter((taskId) => taskId !== found);
+      } else {
+        return [...prevState, value];
+      }
+    });
+  };
+
+  //Item to render in the draggable list
   const renderItem = ({ item, drag, isActive }) => {
     return (
       <ScaleDecorator>
-        <TaskItem title={item.title} drag={drag} isActive={isActive} />
+        <TaskItem
+          title={item.title}
+          drag={drag}
+          isActive={isActive}
+          selectTasks={chooseTasksState}
+          selected={selectedTasksState.includes(item.key)}
+          checkTaskHandler={() => selectTaskHandler(item.key)}
+        />
       </ScaleDecorator>
     );
   };
@@ -61,13 +84,38 @@ export default function Tasks({ onPress }) {
         </View>
         <Text style={styles.taskText}>CLICK TO ADD TASKS</Text>
       </Pressable> */}
+
+      {/* Tasks Lists */}
       <View style={styles.tasksList}>
         <View style={styles.tasksListTitles}>
-          <TxtBold color={"#909CC6"}>TODO</TxtBold>
-          <Pressable onPress={() => console.log("pressed")}>
-            <TxtBold color={"#01D9F7"}>SELECT</TxtBold>
-          </Pressable>
+          <TxtBold color={Theme.colors.secondaryDark200}>TODO</TxtBold>
+
+          {/* Display 'select' or 'delete/cancel' buttons */}
+          {chooseTasksState ? (
+            <View style={styles.deleteButtonsContainer}>
+              <Pressable>
+                <TxtBold color={Theme.colors.crimson}>DELETE</TxtBold>
+              </Pressable>
+              <DotIcon />
+              <Pressable
+                onPress={() => {
+                  setChooseTasksState((prevState) => !prevState);
+                  setSelectedTasksState([]);
+                }}
+              >
+                <TxtBold color={Theme.colors.primary}>CANCEL</TxtBold>
+              </Pressable>
+            </View>
+          ) : (
+            <Pressable
+              onPress={() => setChooseTasksState((prevState) => !prevState)}
+            >
+              <TxtBold color={Theme.colors.primary}>SELECT</TxtBold>
+            </Pressable>
+          )}
         </View>
+
+        {/* Draggable list of tasks */}
         <View style={styles.tasksContainer}>
           <DraggableFlatList
             data={tasksDataState}
@@ -80,14 +128,37 @@ export default function Tasks({ onPress }) {
           />
         </View>
       </View>
-      <View style={{ ...styles.buttonContainer, ...styles.boxWithShadow }}>
+
+      {/* Add/Play Button */}
+      {/* <View style={{ ...styles.buttonContainer, ...styles.boxWithShadow }}>
         <Pressable onPress={onPress}>
           <View style={{ ...styles.button, ...styles.boxWithShadow }}>
             <AddIcon />
           </View>
         </Pressable>
-      </View>
+      </View> */}
+      {chooseTasksState ? (
+        <Button onPress={() => console.log("pressed")}>
+          <PlayIcon />
+        </Button>
+      ) : (
+        <Button onPress={onPress}>
+          <AddIcon />
+        </Button>
+      )}
     </GestureHandlerRootView>
+  );
+}
+
+function Button({ children, onPress }) {
+  return (
+    <View style={{ ...styles.buttonContainer, ...styles.boxWithShadow }}>
+      <Pressable onPress={onPress}>
+        <View style={{ ...styles.button, ...styles.boxWithShadow }}>
+          {children}
+        </View>
+      </Pressable>
+    </View>
   );
 }
 
@@ -131,6 +202,14 @@ const styles = StyleSheet.create({
     // borderColor: "green",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingTop: 5,
+  },
+  deleteButtonsContainer: {
+    flexDirection: "row",
+
+    width: 150,
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   tasksContainer: {
     flex: 1,

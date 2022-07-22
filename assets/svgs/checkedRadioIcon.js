@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-function CheckedRadioIcon() {
+function CheckedRadioIcon({ color }) {
   return (
     <Svg
       width="28"
@@ -11,7 +11,7 @@ function CheckedRadioIcon() {
     >
       <Path
         d="M14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28Z"
-        fill="#01D9F7"
+        fill={color ? color : "#01D9F7"}
       />
     </Svg>
   );
