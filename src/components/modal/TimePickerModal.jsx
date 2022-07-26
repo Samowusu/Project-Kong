@@ -8,10 +8,10 @@ import {
   Image,
 } from "react-native";
 import React, { useRef, useEffect, useState, forwardRef, memo } from "react";
-import ActionModal from "./ActionModal";
-import { Txt } from "../screens/Landing/LandingStyles";
-import { DoubleScroller } from "./Scroller";
-import { Theme } from "../theme/default";
+import BaseModal from "./BaseModal";
+import { Txt } from "../../screens/Landing/LandingStyles";
+import { DoubleScroller } from "../scroller/Scroller";
+import { Theme } from "../../config/theme";
 
 TimePickerModal.defaultProps = {
   visible: true,
@@ -49,7 +49,7 @@ export default function TimePickerModal({
   };
 
   return (
-    <ActionModal
+    <BaseModal
       modalHeight={1.2}
       title={"Create task"}
       visible={visible}
@@ -81,7 +81,7 @@ export default function TimePickerModal({
           </View>
         </Pressable>
       </View>
-    </ActionModal>
+    </BaseModal>
   );
 }
 

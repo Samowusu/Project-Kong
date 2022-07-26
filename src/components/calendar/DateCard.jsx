@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Theme } from "../theme/default";
+import { Theme } from "../../config/theme";
 
 DateCard.defaultProps = {
   index: 1,

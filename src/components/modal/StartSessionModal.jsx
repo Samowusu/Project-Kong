@@ -1,26 +1,53 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React from "react";
-import ActionModal from "./ActionModal";
-import { Theme } from "../theme/default";
-import { TitleTextContainer } from "./TaskItem";
+import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import BaseModal from "./BaseModal";
+import { Theme } from "../../config/theme";
+import { TitleTextContainer } from "../task/TaskItem";
 import {
   Txt,
   SmallTxt,
   TxtBold,
   TxtBolder,
-} from "../screens/Landing/LandingStyles";
-import RadioItem from "./RadioItem";
-import DotIcon from "../../assets/svgs/dotIcon";
-import ArrowIcon from "../../assets/svgs/arrowIcon";
+} from "../../screens/Landing/LandingStyles";
+import RadioItem from "../radio/RadioItem";
+import DotIcon from "../../../assets/svgs/dotIcon";
+import ArrowIcon from "../../../assets/svgs/arrowIcon";
+import moment from "moment";
+import useTimeToDecimal from "../../hooks/useTimeToDecimal";
 
-const StartSessionModal = () => {
+const StartSessionModal = ({
+  selectedTasks,
+  toggleTimePickerModal,
+  hour,
+  minute,
+  visible,
+  toggleStartSessionModal,
+}) => {
+  const tasksDuration = 3;
+  const currentTime = moment().format("hh: mm A");
+  const endTime = moment().add(tasksDuration, "hours").format("hh: mm A");
+
+  // LOGIC FOR CUMULATIVE TIME
+  //   const tasks = [{hr:'', min: ''},{hr:'', min: ''},{hr:'', min: ''}]
+  // let hrsArray = []
+  // let minsArray = []
+  // loop through tasks and pick hrs and mins
+  // tasks.forEach(task => hrsArray.push(task.hr))
+  // tasks.forEach(task => minsArray.push(task.min))
+
+  // get the total hrs by summing your hrsArray
+  // get total mins and convert to hrs by dividing by 60
+
+  // sum both to get the cumulative hrs
   return (
-    <ActionModal
+    <BaseModal
       title={"start session"}
       modalHeight={1.2}
       buttons
       firstButtonText={"cancel"}
       secondButtonText={"start session"}
+      visible={visible}
+      toggleModal={toggleStartSessionModal}
     >
       <View style={styles.container}>
         <View style={styles.tasksContainer}>
@@ -36,12 +63,15 @@ const StartSessionModal = () => {
             <SelectedTaskItem />
           </ScrollView>
         </View>
-        <View style={styles.durationContainer}>
+        <Pressable
+          onPress={toggleTimePickerModal}
+          style={styles.durationContainer}
+        >
           <View style={styles.durationWrapper}>
             <View style={{ flex: 3 }}>
               <SmallTxt color={Theme.colors.greyText}>From</SmallTxt>
               <TxtBolder color={Theme.colors.secondaryDark200}>
-                01: 00 PM
+                {currentTime}
               </TxtBolder>
             </View>
             <View
@@ -57,17 +87,25 @@ const StartSessionModal = () => {
             <View style={{ flex: 3 }}>
               <SmallTxt color={Theme.colors.greyText}>To</SmallTxt>
               <TxtBolder color={Theme.colors.secondaryDark200}>
-                02: 00 PM
+                {endTime}
               </TxtBolder>
             </View>
           </View>
-        </View>
+        </Pressable>
       </View>
-    </ActionModal>
+    </BaseModal>
   );
 };
 
-function SelectedTaskItem() {
+SelectedTaskItem.defaultProps = {
+  title: "Task 1",
+  notes:
+    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribuseius debitis rem quibusdam autem tempora, dicta iste, voluptate",
+  hour: "01",
+  minute: "30",
+};
+function SelectedTaskItem({ title, notes, hour, minute }) {
+  const taskDuration = useTimeToDecimal(hour, minute);
   return (
     <View style={{ flexDirection: "row", marginTop: 20 }}>
       <View style={{ paddingTop: 5 }}>
@@ -76,16 +114,13 @@ function SelectedTaskItem() {
       <View style={{ paddingHorizontal: 10 }}>
         <View>
           <TitleTextContainer>
-            <Txt color={Theme.colors.monoLight}>Task 1</Txt>
+            <Txt color={Theme.colors.monoLight}>{title}</Txt>
             <DotIcon color={Theme.colors.monoLight} />
-            <Txt color={Theme.colors.monoLight}>1.5h</Txt>
+            <Txt color={Theme.colors.monoLight}>{taskDuration}h</Txt>
           </TitleTextContainer>
         </View>
         <View>
-          <SmallTxt color={Theme.colors.monoLight}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus
-            eius debitis rem quibusdam autem tempora, dicta iste, voluptate
-          </SmallTxt>
+          <SmallTxt color={Theme.colors.monoLight}>{notes}</SmallTxt>
         </View>
       </View>
     </View>

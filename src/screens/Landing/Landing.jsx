@@ -1,22 +1,37 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Container, Txt, TxtBold } from "./LandingStyles";
-import Calendar from "../../components/Calendar";
-import Tasks from "../../components/Tasks";
-import CreateTaskModal from "../../components/CreateTaskModal";
-import TimePickerModal from "../../components/TimePickerModal";
-import Scroller from "../../components/Scroll";
-import DateCard from "../../components/DateCard";
-import ActionModal from "../../components/ActionModal";
-import Scroll, { DoubleScroller } from "../../components/Scroller";
-import TaskItem from "../../components/TaskItem";
+import Calendar from "../../components/calendar/Calendar";
+import Tasks from "../../components/task/Tasks";
+import CreateTaskModal from "../../components/modal/CreateTaskModal";
+import TimePickerModal from "../../components/modal/TimePickerModal";
+import DateCard from "../../components/calendar/DateCard";
+import Scroll, { DoubleScroller } from "../../components/scroller/Scroller";
+import TaskItem from "../../components/task/TaskItem";
 import Glossary from "../Glossary/Glossary";
-import StartSessionModal from "../../components/StartSessionModal";
+import StartSessionModal from "../../components/modal/StartSessionModal";
+
+const DUMMY_TASKS = [
+  { title: "Task 1", key: "one" },
+  { title: "Task 2", key: "two" },
+  { title: "Task 3", key: "three" },
+  { title: "Task 4", key: "four" },
+  { title: "Task 5", key: "five" },
+  { title: "Task 6", key: "six" },
+  { title: "Task 7", key: "seven" },
+  { title: "Task 8", key: "eight" },
+  { title: "Task 9", key: "nine" },
+  { title: "Task 10", key: "ten" },
+  { title: "Task 11", key: "eleven" },
+  { title: "Task 12", key: "twelve" },
+  { title: "Task 13", key: "thirteen" },
+];
 
 export default function Landing() {
   const [showCreateTaskModalState, setShowCreateTaskModalState] =
     useState(false);
   const [showTimePickerModal, setShowTimePickerModal] = useState(false);
+  const [showStartSessionModal, setShowStartSessionModal] = useState(false);
   const [selectedHourState, setSelectedHourState] = useState("03");
   const [selectedMinuteState, setSelectedMinuteState] = useState("30");
 
@@ -36,13 +51,20 @@ export default function Landing() {
     setShowTimePickerModal((prevState) => !prevState);
   };
 
+  const toggleStartSessionModalHandler = () => {
+    setShowStartSessionModal((prevState) => !prevState);
+  };
+
   return <StartSessionModal />;
   return (
     <Container>
       <Txt>A clean slate!</Txt>
       <TxtBold>Let's find something to do...</TxtBold>
       <Calendar />
-      <Tasks onPress={toggleCreateTaskModalHandler} />
+      <Tasks
+        toggleCreateTaskModal={toggleCreateTaskModalHandler}
+        toggleStartSessionModal={toggleStartSessionModalHandler}
+      />
       <CreateTaskModal
         toggleCreateTaskModal={toggleCreateTaskModalHandler}
         visible={showCreateTaskModalState}
@@ -55,6 +77,13 @@ export default function Landing() {
         toggleModal={toggleTimePickerModalHandler}
         onChangeHour={changeHourHandler}
         onChangeMinute={changeMinuteHandler}
+      />
+      <StartSessionModal
+        toggleTimePickerModal={toggleTimePickerModalHandler}
+        hour={selectedHourState}
+        minute={selectedMinuteState}
+        visible={showStartSessionModal}
+        toggleStartSessionModal={toggleStartSessionModalHandler}
       />
     </Container>
   );

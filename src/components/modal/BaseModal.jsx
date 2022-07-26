@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
-import { Theme } from "../theme/default";
+import { Theme } from "../../config/theme";
 
-ActionModal.defaultProps = {
+BaseModal.defaultProps = {
   children: <Text>Welcome to the Action Modal</Text>,
   visible: true,
   toggleModal: () => {
@@ -19,7 +19,7 @@ ActionModal.defaultProps = {
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 
-export default function ActionModal({
+export default function BaseModal({
   children,
   visible,
   toggleModal,
@@ -36,8 +36,8 @@ export default function ActionModal({
   return (
     <Modal
       isVisible={visible}
-      animationIn={"slideInDown"}
-      animationOut={"slideOutUp"}
+      animationIn={"slideInUp"}
+      animationOut={"slideOutDown"}
       animationInTiming={500}
       animationOutTiming={500}
       style={styles.modal(duration)}
@@ -63,7 +63,7 @@ export default function ActionModal({
 
         {buttons && (
           <View style={styles.buttonsContainer}>
-            <Pressable>
+            <Pressable onPress={disableModalHandler}>
               <Text
                 style={{ ...styles.titleText, color: Theme.colors.monoLight }}
               >

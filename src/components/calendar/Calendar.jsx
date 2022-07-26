@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import DateCard from "./DateCard";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
-import { Theme } from "../theme/default";
+import { Theme } from "../../config/theme";
 
 export default function Calendar() {
   const [datesState, setDatesState] = useState([]);

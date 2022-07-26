@@ -7,7 +7,7 @@ import {
   Image,
 } from "react-native";
 import React, { useRef, useEffect, useState } from "react";
-import { Theme } from "../theme/default";
+import { Theme } from "../../config/theme";
 
 Scroller.defaultProps = {
   data: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"],
@@ -20,7 +20,7 @@ const ITEM_HEIGHT = 100;
 export default function Scroller({ data, itemsToShow, onChange }) {
   const containerHeight = ITEM_HEIGHT * itemsToShow;
   const [selectedIndexState, setSelectedIndexState] = useState(
-    data.length % 2 == 0
+    data.length % 2 === 0
       ? Math.floor(containerHeight / 2 / ITEM_HEIGHT)
       : Math.ceil(containerHeight / 2 / ITEM_HEIGHT)
   );
@@ -37,7 +37,7 @@ export default function Scroller({ data, itemsToShow, onChange }) {
         }),
       300
     );
-  }, []);
+  }, [data]);
 
   return (
     <View style={{ flex: 1, height: containerHeight }}>
@@ -90,8 +90,8 @@ export default function Scroller({ data, itemsToShow, onChange }) {
 }
 
 DoubleScroller.defaultProps = {
-  hours: ["01", "02", "03"],
-  minutes: ["00", "15", "30"],
+  hours: ["01", "02", "03", "04", "05", "06"],
+  minutes: ["00", "15", "30", "45"],
   onChangeHour: (hour) => console.log(hour),
   onChangeMinute: (minute) => console.log(minute),
 };
@@ -107,7 +107,7 @@ export function DoubleScroller({
       <Scroller data={hours} onChange={onChangeHour} />
       <Scroller data={minutes} onChange={onChangeMinute} />
       <View style={styles.pointer} pointerEvents="none">
-        <Image source={require("../../assets/ellipse.png")} />
+        <Image source={require("../../../assets/ellipse.png")} />
       </View>
     </View>
   );

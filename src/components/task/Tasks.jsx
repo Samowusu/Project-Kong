@@ -11,38 +11,41 @@ import React, { useState } from "react";
 import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
-import AddIcon from "../../assets/svgs/addIcon";
-import { TxtBold } from "../screens/Landing/LandingStyles";
+import AddIcon from "../../../assets/svgs/addIcon";
+import { TxtBold } from "../../screens/Landing/LandingStyles";
 import TaskItem, { MovableTask, TASK_ITEM_HEIGHT } from "./TaskItem";
-import { Theme } from "../theme/default";
+import { Theme } from "../../config/theme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import DotIcon from "../../assets/svgs/dotIcon";
-import PlayIcon from "../../assets/svgs/playIcon";
-
-const DUMMY_TASKS = [
-  { title: "Task 1", key: "one" },
-  { title: "Task 2", key: "two" },
-  { title: "Task 3", key: "three" },
-  { title: "Task 4", key: "four" },
-  { title: "Task 5", key: "five" },
-  { title: "Task 6", key: "six" },
-  { title: "Task 7", key: "seven" },
-  { title: "Task 8", key: "eight" },
-  { title: "Task 9", key: "nine" },
-  { title: "Task 10", key: "ten" },
-  { title: "Task 11", key: "eleven" },
-  { title: "Task 12", key: "twelve" },
-  { title: "Task 13", key: "thirteen" },
-];
+import DotIcon from "../../../assets/svgs/dotIcon";
+import PlayIcon from "../../../assets/svgs/playIcon";
 
 Tasks.defaultProps = {
   onPress: () => {
     console.log("pressed");
   },
+  newTasks: [
+    { title: "Task 1", key: "one" },
+    { title: "Task 2", key: "two" },
+    { title: "Task 3", key: "three" },
+    { title: "Task 4", key: "four" },
+    { title: "Task 5", key: "five" },
+    { title: "Task 6", key: "six" },
+    { title: "Task 7", key: "seven" },
+    { title: "Task 8", key: "eight" },
+    { title: "Task 9", key: "nine" },
+    { title: "Task 10", key: "ten" },
+    { title: "Task 11", key: "eleven" },
+    { title: "Task 12", key: "twelve" },
+    { title: "Task 13", key: "thirteen" },
+  ],
 };
 
-export default function Tasks({ onPress }) {
-  const [tasksDataState, setTasksDataState] = useState(DUMMY_TASKS);
+export default function Tasks({
+  toggleCreateTaskModal,
+  toggleStartSessionModal,
+  newTasks,
+}) {
+  const [tasksDataState, setTasksDataState] = useState(newTasks);
   const [chooseTasksState, setChooseTasksState] = useState(false);
   const [selectedTasksState, setSelectedTasksState] = useState([]);
 
@@ -138,11 +141,11 @@ export default function Tasks({ onPress }) {
         </Pressable>
       </View> */}
       {chooseTasksState ? (
-        <Button onPress={() => console.log("pressed")}>
+        <Button onPress={toggleStartSessionModal}>
           <PlayIcon />
         </Button>
       ) : (
-        <Button onPress={onPress}>
+        <Button onPress={toggleCreateTaskModal}>
           <AddIcon />
         </Button>
       )}

@@ -1,16 +1,20 @@
 import { StyleSheet, View, Image, Pressable } from "react-native";
-import React, { useState } from "react";
-import { Txt, TxtBold } from "../screens/Landing/LandingStyles";
+import React, { useState, useEffect } from "react";
+import { Txt, TxtBold } from "../../screens/Landing/LandingStyles";
 import styled from "styled-components/native";
-import { Theme } from "../theme/default";
-import RadioItem from "./RadioItem";
-import DragHandleIcon from "../../assets/svgs/dragHandleIcon";
-import DotIcon from "../../assets/svgs/dotIcon";
+import { Theme } from "../../config/theme";
+import RadioItem from "../radio/RadioItem";
+import DragHandleIcon from "../../../assets/svgs/dragHandleIcon";
+import DotIcon from "../../../assets/svgs/dotIcon";
+import useTimeToDecimal from "../../hooks/useTimeToDecimal";
 
 export const TASK_ITEM_HEIGHT = 70;
 
 TaskItem.defaultProps = {
+  selectTasks: false,
   title: "Task 1",
+  hour: "03",
+  minute: "30",
   drag: () => {},
   isActive: false,
   notes:
@@ -24,8 +28,11 @@ export default function TaskItem({
   selectTasks,
   checkTaskHandler,
   selected,
+  hour,
+  minute,
 }) {
   const [showNoteState, setShowNoteState] = useState(false);
+  const taskDuration = useTimeToDecimal(hour, minute);
 
   return (
     <View style={styles.mainContainer}>
@@ -35,12 +42,14 @@ export default function TaskItem({
         disabled={isActive}
       >
         <View style={styles.Titlecontainer}>
-          <View style={styles.titleTextContainer}>
+          <TitleTextContainer>
             <Txt color={Theme.colors.secondaryDark}>{title}</Txt>
 
             {showNoteState && <DotIcon />}
-            {showNoteState && <Txt color={Theme.colors.monoDark}>1.5h</Txt>}
-          </View>
+            {showNoteState && (
+              <Txt color={Theme.colors.monoDark}>{taskDuration}h</Txt>
+            )}
+          </TitleTextContainer>
           {selectTasks ? (
             <RadioItem onChange={checkTaskHandler} selected={selected} />
           ) : (

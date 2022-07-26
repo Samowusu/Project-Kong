@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import DateCard from "../../components/DateCard";
-import Calendar from "../../components/Calendar";
-import Tasks from "../../components/Tasks";
-import ActionModal from "../../components/ActionModal";
-import TimePickerModal from "../../components/TimePickerModal";
-import CreateTaskModal from "../../components/CreateTaskModal";
-import TaskItem from "../../components/TaskItem";
-import RadioItem from "../../components/RadioItem";
-import StartSessionModal from "../../components/StartSessionModal";
+import DateCard from "../../components/calendar/DateCard";
+import Calendar from "../../components/calendar/Calendar";
+import Tasks from "../../components/task/Tasks";
+import BaseModal from "../../components/modal/BaseModal";
+import TimePickerModal from "../../components/modal/TimePickerModal";
+import CreateTaskModal from "../../components/modal/CreateTaskModal";
+import TaskItem from "../../components/task/TaskItem";
+import RadioItem from "../../components/radio/RadioItem";
+import StartSessionModal from "../../components/modal/StartSessionModal";
+import { DoubleScroller } from "../../components/scroller/Scroller";
 
 export default function Glossary() {
   return <StartSessionModal />;
@@ -19,10 +20,11 @@ export default function Glossary() {
       <Tasks />
       <TaskItem />
       <RadioItem />
-      <ActionModal />
+      <BaseModal />
       <TimePickerModal />
       <CreateTaskModal />
       <StartSessionModal />
+      <DoubleScroller />
     </View>
   );
 }

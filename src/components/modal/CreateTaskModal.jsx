@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
 import React, { useState } from "react";
-import ActionModal from "./ActionModal";
-import PlusIcon from "../../assets/svgs/plusIcon";
-import { Theme } from "../theme/default";
+import BaseModal from "./BaseModal";
+import PlusIcon from "../../../assets/svgs/plusIcon";
+import { Theme } from "../../config/theme";
 
 CreateTaskModal.defaultProps = {
   visible: true,
@@ -34,7 +34,7 @@ export default function CreateTaskModal({
     toggleTimePickerModal();
   };
   return (
-    <ActionModal
+    <BaseModal
       visible={visible}
       toggleModal={toggleCreateTaskModalHandler}
       modalHeight={2}
@@ -74,7 +74,7 @@ export default function CreateTaskModal({
           </View>
         </Pressable>
       </View>
-    </ActionModal>
+    </BaseModal>
   );
 }
 
