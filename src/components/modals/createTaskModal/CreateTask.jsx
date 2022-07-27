@@ -1,48 +1,27 @@
 import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
 import React, { useState } from "react";
-import BaseModal from "./BaseModal";
-import PlusIcon from "../../../assets/svgs/plusIcon";
-import { Theme } from "../../config/theme";
+import PlusIcon from "../../../../assets/svgs/plusIcon";
+import { Theme } from "../../../config/theme";
 
-CreateTaskModal.defaultProps = {
-  visible: true,
-  toggleCreateTaskModal: () => {
-    console.log("toggle create task modal");
-  },
-  toggleTimePickerModal: () => {
-    console.log("toggle time picker modal");
-  },
+CreateTask.defaultProps = {
   hour: "03",
   minute: "30",
+  toggleTimePickerModalHandler: () => console.log("toggle time handler"),
 };
-
-export default function CreateTaskModal({
-  visible,
-  toggleCreateTaskModal,
-  toggleTimePickerModal,
-  hour,
-  minute,
-}) {
+export function CreateTask({ hour, minute, toggleTimePickerModalHandler }) {
   const [showNoteInputState, setShowNoteInputState] = useState(false);
 
-  const toggleCreateTaskModalHandler = () => {
-    toggleCreateTaskModal();
-    setShowNoteInputState(false);
-  };
+  // const toggleCreateTaskModalHandler = () => {
+  //   toggleCreateTaskModal();
+  //   setShowNoteInputState(false);
+  // };
 
-  const toggleTimePickerModalHandler = () => {
-    toggleTimePickerModal();
-  };
+  // const toggleTimePickerModalHandler = () => {
+  //   toggleTimePickerModal();
+  // };
+
   return (
-    <BaseModal
-      visible={visible}
-      toggleModal={toggleCreateTaskModalHandler}
-      modalHeight={2}
-      title="Create Task"
-      firstButtonText={"cancel"}
-      secondButtonText={"add task"}
-      buttons
-    >
+    <>
       <View style={styles.inputContainer}>
         <TextInput placeholder="Title" style={styles.inputTitleText} />
         {showNoteInputState && (
@@ -64,17 +43,21 @@ export default function CreateTaskModal({
           </View>
         </Pressable>
       )}
-      <View style={styles.durationContainer}>
-        <Pressable onPress={toggleTimePickerModalHandler}>
-          <View style={styles.duration}>
-            <Text style={styles.durationText}>Duration</Text>
-            <Text style={styles.timerText}>
-              {hour}·{minute}
-            </Text>
-          </View>
-        </Pressable>
-      </View>
-    </BaseModal>
+      <Pressable
+        onPress={() => setShowNoteInputState((prevState) => !prevState)}
+      >
+        <View style={styles.durationContainer}>
+          <Pressable onPress={toggleTimePickerModalHandler}>
+            <View style={styles.duration}>
+              <Text style={styles.durationText}>Duration</Text>
+              <Text style={styles.timerText}>
+                {hour}·{minute}
+              </Text>
+            </View>
+          </Pressable>
+        </View>
+      </Pressable>
+    </>
   );
 }
 

@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import DateCard from "./DateCard";
+import { DateCard } from "./DateCard";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
 import { Theme } from "../../config/theme";
 
-export default function Calendar() {
+export function Calendar() {
   const [datesState, setDatesState] = useState([]);
   const moment = extendMoment(Moment);
 

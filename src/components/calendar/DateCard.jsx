@@ -11,7 +11,7 @@ DateCard.defaultProps = {
   },
 };
 
-export default function DateCard({ index, dates: { date, month, day } }) {
+export function DateCard({ index, dates: { date, month, day } }) {
   return (
     <View style={styles.cardContainer(index)}>
       <View style={styles.cardContents}>
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: bgColor,
       marginRight: 10,
+      maxWidth: 100,
     };
   },
   cardContents: {

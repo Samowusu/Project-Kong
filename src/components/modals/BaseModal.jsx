@@ -19,7 +19,7 @@ BaseModal.defaultProps = {
 
 const PAGE_HEIGHT = Dimensions.get("window").height;
 
-export default function BaseModal({
+export function BaseModal({
   children,
   visible,
   toggleModal,
@@ -43,7 +43,7 @@ export default function BaseModal({
       style={styles.modal(duration)}
       onBackdropPress={disableModalHandler}
       onBackButtonPress={disableModalHandler}
-      backdropOpacity={duration ? 0.6 : 0.1}
+      backdropOpacity={duration ? 0.6 : 0}
     >
       <View style={styles.modalContainer(modalHeight, duration)}>
         <View style={styles.titleTextContainer}>

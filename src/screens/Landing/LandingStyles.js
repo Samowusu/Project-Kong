@@ -19,14 +19,25 @@ export const Txt = styled.Text`
   font-family: Poppins_400Regular;
 `;
 
-export const TxtBold = styled(Txt)`
-  font-family: Poppins_600SemiBold;
-`;
-
 export const SmallTxt = styled(Txt)`
   font-size: ${`${Theme.fonts.s}px`};
 `;
 
+export const MediumTxt = styled(Txt)`
+  font-size: ${`${Theme.fonts.l}px`};
+`;
+
+export const LargeTxt = styled(Txt)`
+  font-size: ${`${Theme.fonts.xxl}px`};
+`;
+
+export const TxtBold = styled(Txt)`
+  font-family: Poppins_600SemiBold;
+`;
 export const TxtBolder = styled(TxtBold)`
   font-size: ${`${Theme.fonts.xxl}px`};
+`;
+
+export const VeryBold = styled(Txt)`
+  font-size: ${`${Theme.fonts.mega}px`};
 `;

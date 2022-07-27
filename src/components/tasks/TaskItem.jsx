@@ -20,7 +20,7 @@ TaskItem.defaultProps = {
   notes:
     "Task Items Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi neque deleniti facilis, deserunt eos debitis inventore temporibus unde numquam! Iure, repellat perferendis? Nam, sequi. Facere reiciendis saepe tenetur nostrum cumque.",
 };
-export default function TaskItem({
+export function TaskItem({
   title,
   drag,
   isActive,

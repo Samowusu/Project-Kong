@@ -1,43 +1,22 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  ScrollView,
-  Pressable,
-  Image,
-} from "react-native";
-import React, { useRef, useEffect, useState, forwardRef, memo } from "react";
-import BaseModal from "./BaseModal";
-import { Txt } from "../../screens/Landing/LandingStyles";
-import { DoubleScroller } from "../scroller/Scroller";
-import { Theme } from "../../config/theme";
+import { StyleSheet, Text, View, Pressable, Dimensions } from "react-native";
+import React, { useState } from "react";
 
-TimePickerModal.defaultProps = {
-  visible: true,
-  toggleModal: () => {
-    console.log("toggle modal");
-  },
-  onChangeHour: () => {
-    console.log("change hour");
-  },
-  onChangeMinute: () => {
-    console.log("change minute");
-  },
-};
+import { DoubleScroller } from "../../scroller/Scroller";
+import { Theme } from "../../../config/theme";
 
 const { height } = Dimensions.get("window");
+
 const ITEM_HEIGHT = 70;
 const scrollsContainerHeight = height / 2;
 const hoursData = ["00", "01", "02", "03", "04", "05", "06"];
 const minutesData = ["00", "15", "30", "45"];
 
-export default function TimePickerModal({
-  visible,
-  toggleModal,
-  onChangeHour,
-  onChangeMinute,
-}) {
+TimePicker.defaultProps = {
+  onChangeHour: (val) => console.log(val),
+  onChangeMinute: (val) => console.log(val),
+  toggleModal: () => console.log("toggle modal"),
+};
+export function TimePicker({ onChangeHour, onChangeMinute, toggleModal }) {
   const [selectedHourIndexState, setSelectedHourIndexState] = useState("03");
   const [selectedMinuteIndexState, setSelectedMinuteIndexState] =
     useState("30");
@@ -49,42 +28,31 @@ export default function TimePickerModal({
   };
 
   return (
-    <BaseModal
-      modalHeight={1.2}
-      title={"Create task"}
-      visible={visible}
-      duration
-      firstButtonText={"cancel"}
-      secondButtonText={"start session"}
-      toggleModal={toggleModal}
-    >
-      <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>HH</Text>
-          <Text style={styles.titleText}>MM</Text>
-        </View>
-        <View style={styles.scrollsContainer}>
-          <DoubleScroller
-            hours={hoursData}
-            minutes={minutesData}
-            onChangeHour={(val) => setSelectedHourIndexState(val)}
-            onChangeMinute={(val) => setSelectedMinuteIndexState(val)}
-          />
-        </View>
-        <Pressable
-          onPress={() =>
-            setDurationHandler(selectedHourIndexState, selectedMinuteIndexState)
-          }
-        >
-          <View style={styles.setDurationButton}>
-            <Text style={styles.setDurationButtonText}>Set Duration</Text>
-          </View>
-        </Pressable>
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>HH</Text>
+        <Text style={styles.titleText}>MM</Text>
       </View>
-    </BaseModal>
+      <View style={styles.scrollsContainer}>
+        <DoubleScroller
+          hours={hoursData}
+          minutes={minutesData}
+          onChangeHour={(val) => setSelectedHourIndexState(val)}
+          onChangeMinute={(val) => setSelectedMinuteIndexState(val)}
+        />
+      </View>
+      <Pressable
+        onPress={() =>
+          setDurationHandler(selectedHourIndexState, selectedMinuteIndexState)
+        }
+      >
+        <View style={styles.setDurationButton}>
+          <Text style={styles.setDurationButtonText}>Set Duration</Text>
+        </View>
+      </Pressable>
+    </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     // borderWidth: 2,

@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Container, Txt, TxtBold } from "./LandingStyles";
-import Calendar from "../../components/calendar/Calendar";
-import Tasks from "../../components/task/Tasks";
-import CreateTaskModal from "../../components/modal/CreateTaskModal";
-import TimePickerModal from "../../components/modal/TimePickerModal";
+import { Calendar } from "../../components/calendar/Calendar";
+import { Tasks } from "../../components/tasks/Tasks";
+import { CreateTaskModal } from "../../components/modals/createTaskModal/CreateTaskModal";
+import { TimePickerModal } from "../../components/modals/timePickerModal/TimePickerModal";
 import DateCard from "../../components/calendar/DateCard";
 import Scroll, { DoubleScroller } from "../../components/scroller/Scroller";
-import TaskItem from "../../components/task/TaskItem";
+import { TaskItem } from "../../components/tasks/TaskItem";
 import Glossary from "../Glossary/Glossary";
-import StartSessionModal from "../../components/modal/StartSessionModal";
+import StartSessionModal from "../../components/modals/startSessionModal/StartSessionModal";
 
 const DUMMY_TASKS = [
   { title: "Task 1", key: "one" },
@@ -55,7 +55,7 @@ export default function Landing() {
     setShowStartSessionModal((prevState) => !prevState);
   };
 
-  return <StartSessionModal />;
+  return <Glossary />;
   return (
     <Container>
       <Txt>A clean slate!</Txt>
