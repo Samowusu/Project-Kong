@@ -23,7 +23,7 @@ import { StartSessionBubble } from "../../components/modals/startSessionModal/St
 import { SessionInProgress } from "../../components/sessionInProgress/SessionInProgress";
 
 export default function Glossary() {
-  return <Countdown />;
+  return <TasksList />;
   return (
     <ScrollView>
       <Button />

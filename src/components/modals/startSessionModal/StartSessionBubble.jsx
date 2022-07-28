@@ -1,7 +1,9 @@
 import { StyleSheet, View, ScrollView, Pressable } from "react-native";
+import { useState } from "react";
 import { Theme } from "../../../config/theme";
 import { SelectedTaskItem } from "./SelectedTaskItem";
 import { LargeTxt } from "../../../screens/Landing/LandingStyles";
+import useSelectTasks from "../../../hooks/useSelectTasks";
 
 StartSessionBubble.defaultProps = {
   selectedTasks: [
@@ -13,14 +15,14 @@ StartSessionBubble.defaultProps = {
       minute: "30",
     },
     {
-      title: "Task 1",
+      title: "Task 2",
       notes:
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribuseius debitis rem quibusdam autem tempora, dicta iste, voluptate",
       hour: "01",
       minute: "30",
     },
     {
-      title: "Task 1",
+      title: "Task 3",
       notes:
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribuseius debitis rem quibusdam autem tempora, dicta iste, voluptate",
       hour: "01",
@@ -34,6 +36,21 @@ export function StartSessionBubble({
   header,
   showTaskDuration,
 }) {
+  // ==SHOULD BE A HOOK==
+  //   const [selectedTasksState, setSelectedTasksState] = useState([]);
+
+  //   const selectTaskHandler = (value) => {
+  //     setSelectedTasksState((prevState) => {
+  //       const found = prevState.find((taskId) => taskId === value);
+  //       if (found) {
+  //         return prevState.filter((taskId) => taskId !== found);
+  //       } else {
+  //         return [...prevState, value];
+  //       }
+  //     });
+  //   };
+  const [selectedTasksState, selectTaskHandler] = useSelectTasks();
+
   return (
     <View
       style={{
@@ -67,6 +84,8 @@ export function StartSessionBubble({
             notes={task.notes}
             title={task.title}
             showTaskDuration={showTaskDuration}
+            selected={selectedTasksState.includes(task.title)}
+            checkTaskHandler={() => selectTaskHandler(task.title)}
           />
         ))}
       </ScrollView>

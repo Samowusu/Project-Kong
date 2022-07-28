@@ -13,6 +13,7 @@ export const Theme = {
     monoLight200: "#FAFBFE",
     crimson: "#F4456D",
     greyText: "rgba(0,0,0,0.27)",
+    taskComplete: "#A4B0FF",
   },
   fonts: {
     s: 14,

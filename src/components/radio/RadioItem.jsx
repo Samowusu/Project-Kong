@@ -3,18 +3,27 @@ import React from "react";
 import CheckedRadioIcon from "../../../assets/svgs/checkedRadioIcon";
 import UncheckedRadioIcon from "../../../assets/svgs/uncheckedRadioIcon";
 
-const RadioIcon = ({ val, color }) => {
+const RadioIcon = ({ val, checkedColor, uncheckedColor }) => {
   if (val) {
-    return <CheckedRadioIcon color={color} />;
+    return <CheckedRadioIcon color={checkedColor} />;
   }
 
-  return <UncheckedRadioIcon color={color} />;
+  return <UncheckedRadioIcon color={uncheckedColor} />;
 };
 
-export default function RadioItem({ selected, onChange, color }) {
+export default function RadioItem({
+  selected,
+  onChange,
+  checkedColor,
+  uncheckedColor,
+}) {
   return (
     <Pressable onPress={onChange}>
-      <RadioIcon val={selected} color={color} />
+      <RadioIcon
+        val={selected}
+        checkedColor={checkedColor}
+        uncheckedColor={uncheckedColor}
+      />
     </Pressable>
   );
 }

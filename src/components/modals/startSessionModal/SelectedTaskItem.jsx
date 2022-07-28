@@ -22,6 +22,8 @@ export function SelectedTaskItem({
   hour,
   minute,
   showTaskDuration,
+  selected,
+  checkTaskHandler,
 }) {
   const [showNotesState, setshowNotesState] = useState(true);
   const taskDuration = useTimeToDecimal(hour, minute);
@@ -38,10 +40,15 @@ export function SelectedTaskItem({
       }}
     >
       <View style={{ paddingTop: 5 }}>
-        <RadioItem color={Theme.colors.monoLight} />
+        <RadioItem
+          uncheckedColor={Theme.colors.monoLight}
+          checkedColor={Theme.colors.taskComplete}
+          selected={selected}
+          onChange={checkTaskHandler}
+        />
       </View>
       <View style={{ paddingHorizontal: 10 }}>
-        <Pressable onPress={toggleTaskNotesHandler}>
+        {showTaskDuration ? (
           <TitleTextContainer>
             <Txt color={Theme.colors.monoLight}>{title}</Txt>
             {showTaskDuration && <DotIcon color={Theme.colors.monoLight} />}
@@ -49,7 +56,17 @@ export function SelectedTaskItem({
               <Txt color={Theme.colors.monoLight}>{taskDuration}h</Txt>
             )}
           </TitleTextContainer>
-        </Pressable>
+        ) : (
+          <Pressable onPress={toggleTaskNotesHandler}>
+            <TitleTextContainer>
+              <Txt color={Theme.colors.monoLight}>{title}</Txt>
+              {showTaskDuration && <DotIcon color={Theme.colors.monoLight} />}
+              {showTaskDuration && (
+                <Txt color={Theme.colors.monoLight}>{taskDuration}h</Txt>
+              )}
+            </TitleTextContainer>
+          </Pressable>
+        )}
         {showNotesState && (
           <View>
             <SmallTxt color={Theme.colors.monoLight}>{notes}</SmallTxt>

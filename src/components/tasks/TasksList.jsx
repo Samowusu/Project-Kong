@@ -17,6 +17,7 @@ import { TxtBold } from "../../screens/Landing/LandingStyles";
 import DotIcon from "../../../assets/svgs/dotIcon";
 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import useSelectTasks from "../../hooks/useSelectTasks";
 
 TasksList.defaultProps = {
   newTasks: [
@@ -24,23 +25,26 @@ TasksList.defaultProps = {
     { title: "Task 2", key: "two" },
     { title: "Task 3", key: "three" },
   ],
+  onTogglePlayButton: (val) => console.log(val),
 };
 export function TasksList({ newTasks, onTogglePlayButton }) {
   const [tasksDataState, setTasksDataState] = useState(newTasks);
 
   const [chooseTasksState, setChooseTasksState] = useState(false);
-  const [selectedTasksState, setSelectedTasksState] = useState([]);
+  //   const [selectedTasksState, setSelectedTasksState] = useState([]);
 
-  const selectTaskHandler = (value) => {
-    setSelectedTasksState((prevState) => {
-      const found = prevState.find((taskId) => taskId === value);
-      if (found) {
-        return prevState.filter((taskId) => taskId !== found);
-      } else {
-        return [...prevState, value];
-      }
-    });
-  };
+  //   const selectTaskHandler = (value) => {
+  //     setSelectedTasksState((prevState) => {
+  //       const found = prevState.find((taskId) => taskId === value);
+  //       if (found) {
+  //         return prevState.filter((taskId) => taskId !== found);
+  //       } else {
+  //         return [...prevState, value];
+  //       }
+  //     });
+  //   };
+  const [selectedTasksState, selectTaskHandler, setSelectedTasksState] =
+    useSelectTasks();
 
   //Item to render in the draggable list
   const renderItem = ({ item, drag, isActive }) => {
