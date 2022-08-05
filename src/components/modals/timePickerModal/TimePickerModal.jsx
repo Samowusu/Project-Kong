@@ -27,11 +27,14 @@ export function TimePickerModal({
       title={"Create task"}
       visible={visible}
       duration
-      firstButtonText={"cancel"}
-      secondButtonText={"start session"}
       toggleModal={toggleModal}
+      buttons={false}
     >
-      <TimePicker />
+      <TimePicker
+        onChangeHour={onChangeHour}
+        onChangeMinute={onChangeMinute}
+        toggleModal={toggleModal}
+      />
     </BaseModal>
   );
 }

@@ -12,7 +12,8 @@ export function CountdownAnimation() {
       autoPlay
       style={{
         backgroundColor: "#fff",
-        flex: 1,
+        width: "100%",
+        height: 300,
       }}
     />
   );

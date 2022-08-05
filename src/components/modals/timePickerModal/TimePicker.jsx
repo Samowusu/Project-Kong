@@ -6,7 +6,6 @@ import { Theme } from "../../../config/theme";
 
 const { height } = Dimensions.get("window");
 
-const ITEM_HEIGHT = 70;
 const scrollsContainerHeight = height / 2;
 const hoursData = ["00", "01", "02", "03", "04", "05", "06"];
 const minutesData = ["00", "15", "30", "45"];
@@ -76,25 +75,25 @@ const styles = StyleSheet.create({
   scrollsContainer: {
     // borderWidth: 1,
     // borderColor: "green",
-    width: "100%",
+    // width: "100%",
 
     width: "50%",
     overflow: "hidden",
     height: scrollsContainerHeight,
   },
 
-  pointer: {
-    position: "absolute",
-    top: scrollsContainerHeight / 2 - ITEM_HEIGHT / 2,
-    borderWidth: 1,
-    width: "100%",
-    height: ITEM_HEIGHT,
-    borderColor: Theme.colors.secondaryDark200,
+  // pointer: {
+  //   position: "absolute",
+  //   top: scrollsContainerHeight / 2 - ITEM_HEIGHT / 2,
+  //   borderWidth: 1,
+  //   width: "100%",
+  //   height: ITEM_HEIGHT,
+  //   borderColor: Theme.colors.secondaryDark200,
 
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20,
-  },
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   borderRadius: 20,
+  // },
 
   texts: {
     color: Theme.colors.secondaryDark200,

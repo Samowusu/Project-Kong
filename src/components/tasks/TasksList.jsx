@@ -7,7 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DraggableFlatList, {
   ScaleDecorator,
 } from "react-native-draggable-flatlist";
@@ -24,13 +24,28 @@ TasksList.defaultProps = {
     { title: "Task 1", key: "one" },
     { title: "Task 2", key: "two" },
     { title: "Task 3", key: "three" },
+    { title: "Task 4", key: "four" },
+    { title: "Task 5", key: "five" },
+    { title: "Task 6", key: "six" },
+    { title: "Task 7", key: "seven" },
+    { title: "Task 8", key: "eight" },
+    { title: "Task 9", key: "nine" },
+    { title: "Task 10", key: "ten" },
+    { title: "Task 11", key: "eleven" },
   ],
   onTogglePlayButton: (val) => console.log(val),
 };
-export function TasksList({ newTasks, onTogglePlayButton }) {
+export function TasksList({
+  newTasks,
+  onTogglePlayButton,
+  chooseTasksState,
+  setChooseTasksState,
+}) {
   const [tasksDataState, setTasksDataState] = useState(newTasks);
+  useEffect(() => {
+    setTasksDataState(newTasks);
+  }, [newTasks]);
 
-  const [chooseTasksState, setChooseTasksState] = useState(false);
   //   const [selectedTasksState, setSelectedTasksState] = useState([]);
 
   //   const selectTaskHandler = (value) => {
@@ -52,6 +67,9 @@ export function TasksList({ newTasks, onTogglePlayButton }) {
       <ScaleDecorator>
         <TaskItem
           title={item.title}
+          notes={item.notes}
+          hour={item.hour}
+          minute={item.minute}
           drag={drag}
           isActive={isActive}
           selectTasks={chooseTasksState}
@@ -108,6 +126,7 @@ export function TasksList({ newTasks, onTogglePlayButton }) {
             keyExtractor={(item) => item.key}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           />
         </View>
       </View>
@@ -119,11 +138,10 @@ const styles = StyleSheet.create({
   container: {
     // justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
-    // borderWidth: 1,
-    // borderColor: "red",
+    // marginTop: 40,
+    borderWidth: 1,
+    borderColor: "blue",
     flex: 1,
-    position: "relative",
     backgroundColor: Theme.colors.monoLight200,
   },
   tasksList: {
@@ -131,7 +149,7 @@ const styles = StyleSheet.create({
     // borderColor: "black",
     width: "100%",
     height: "100%",
-    paddingHorizontal: 15,
+    // paddingHorizontal: 10,
   },
   tasksListTitles: {
     // borderWidth: 1,
@@ -139,6 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 5,
+    marginBottom: 20,
   },
   deleteButtonsContainer: {
     flexDirection: "row",

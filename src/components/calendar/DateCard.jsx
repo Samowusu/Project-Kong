@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
       borderColor: border,
       borderRadius: 16,
       height: 150,
-      flex: 1,
+      width: "22.5%",
       backgroundColor: bgColor,
-      marginRight: 10,
+      // marginRight: 10,
       maxWidth: 100,
     };
   },

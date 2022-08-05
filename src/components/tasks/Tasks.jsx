@@ -19,7 +19,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import DotIcon from "../../../assets/svgs/dotIcon";
 import PlayIcon from "../../../assets/svgs/playIcon";
 import { AddTaskImage } from "./AddTaskImage";
-import { Button } from "../commons/Button";
+import { CustomButton } from "../commons/Button";
 import { TasksList } from "./TasksList";
 
 Tasks.defaultProps = {
@@ -60,24 +60,81 @@ export function Tasks({
   };
 
   return (
-    <>
-      <AddTaskImage />
+    <View
+      style={{
+        flex: 1,
+        position: "relative",
+        paddingTop: 30,
+        borderWidth: 1,
+        borderColor: "black",
+      }}
+    >
+      {/* <AddTaskImage /> */}
 
       {/* Tasks Lists */}
       <TasksList onTogglePlayButton={togglePlayButton} />
 
       {/* Add/Play Button */}
 
+      <View
+        style={{
+          // width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          borderWidth: 1,
+          borderColor: "red",
+          position: "absolute",
+          bottom: "5%",
+        }}
+      >
+        {chooseTasksState ? (
+          <CustomButton onPress={toggleStartSessionModal}>
+            <PlayIcon />
+          </CustomButton>
+        ) : (
+          <CustomButton onPress={toggleCreateTaskModal}>
+            <AddIcon />
+          </CustomButton>
+        )}
+      </View>
+    </View>
+  );
+}
+
+FloatingButton.defaultProps = {
+  chooseTasksState: false,
+  toggleCreateTaskModal: () => console.log("toggle create task"),
+  toggleStartSessionModal: () => console.log("start session"),
+};
+export function FloatingButton({
+  chooseTasksState,
+  toggleCreateTaskModal,
+  toggleStartSessionModal,
+}) {
+  return (
+    <View
+      style={{
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        // borderWidth: 1,
+        // borderColor: "red",
+        marginTop: 20,
+        position: "absolute",
+        bottom: 0,
+      }}
+      pointerEvents={"box-none"}
+    >
       {chooseTasksState ? (
-        <Button onPress={toggleStartSessionModal}>
+        <CustomButton onPress={toggleStartSessionModal}>
           <PlayIcon />
-        </Button>
+        </CustomButton>
       ) : (
-        <Button onPress={toggleCreateTaskModal}>
+        <CustomButton onPress={toggleCreateTaskModal}>
           <AddIcon />
-        </Button>
+        </CustomButton>
       )}
-    </>
+    </View>
   );
 }
 

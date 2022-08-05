@@ -34,10 +34,16 @@ export function TaskItem({
   const [showNoteState, setShowNoteState] = useState(false);
   const taskDuration = useTimeToDecimal(hour, minute);
 
+  const onToggleTaskNotes = () => {
+    if (notes.trim().length > 0) {
+      setShowNoteState((prevState) => !prevState);
+    }
+  };
+
   return (
     <View style={styles.mainContainer}>
       <Pressable
-        onPress={() => setShowNoteState((prevState) => !prevState)}
+        onPress={onToggleTaskNotes}
         onLongPress={drag}
         disabled={isActive}
       >
@@ -45,10 +51,9 @@ export function TaskItem({
           <TitleTextContainer>
             <Txt color={Theme.colors.secondaryDark}>{title}</Txt>
 
-            {showNoteState && <DotIcon />}
-            {showNoteState && (
-              <Txt color={Theme.colors.monoDark}>{taskDuration}h</Txt>
-            )}
+            <DotIcon marginHorizontal={8} />
+
+            <Txt color={Theme.colors.monoDark}>{taskDuration}h</Txt>
           </TitleTextContainer>
           {selectTasks ? (
             <RadioItem onChange={checkTaskHandler} selected={selected} />
@@ -74,7 +79,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     // height: TASK_ITEM_HEIGHT,
     backgroundColor: Theme.colors.monoLight,
-    marginTop: 10,
   },
   Titlecontainer: {
     // borderWidth: 1,
@@ -100,7 +104,6 @@ const styles = StyleSheet.create({
 });
 
 export const TitleTextContainer = styled.View`
-  width: 100px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

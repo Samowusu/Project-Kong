@@ -15,7 +15,7 @@ Scroller.defaultProps = {
   onChange: (val) => console.log(val),
 };
 
-const ITEM_HEIGHT = 100;
+const ITEM_HEIGHT = 80;
 
 export default function Scroller({ data, itemsToShow, onChange }) {
   const containerHeight = ITEM_HEIGHT * itemsToShow;
@@ -32,7 +32,7 @@ export default function Scroller({ data, itemsToShow, onChange }) {
           y:
             data.length % 2 == 0
               ? containerHeight / 2 - 50
-              : containerHeight / 2 + 50,
+              : containerHeight / 2 + 30,
           animate: true,
         }),
       300

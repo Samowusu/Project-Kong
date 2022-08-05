@@ -2,7 +2,7 @@ import { StyleSheet, View, ScrollView, Pressable } from "react-native";
 import { useState } from "react";
 import { Theme } from "../../../config/theme";
 import { SelectedTaskItem } from "./SelectedTaskItem";
-import { LargeTxt } from "../../../screens/Landing/LandingStyles";
+import { LargerTxt } from "../../../screens/Landing/LandingStyles";
 import useSelectTasks from "../../../hooks/useSelectTasks";
 
 StartSessionBubble.defaultProps = {
@@ -69,7 +69,7 @@ export function StartSessionBubble({
             paddingVertical: 15,
           }}
         >
-          <LargeTxt color={Theme.colors.monoLight}>15.13 - 18.43</LargeTxt>
+          <LargerTxt color={Theme.colors.monoLight}>15.13 - 18.43</LargerTxt>
         </View>
       )}
       <ScrollView

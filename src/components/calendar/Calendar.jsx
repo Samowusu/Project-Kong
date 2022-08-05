@@ -51,7 +51,10 @@ export function Calendar() {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    marginTop: 50,
+    marginTop: 30,
+    // borderWidth: 1,
+    // borderColor: "red",
+    // maxWidth: 350,
   },
   calendarText: {
     fontSize: Theme.fonts.m,
@@ -61,5 +64,6 @@ const styles = StyleSheet.create({
   cardList: {
     marginTop: 17,
     flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

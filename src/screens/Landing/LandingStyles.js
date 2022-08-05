@@ -9,7 +9,8 @@ export const SafeContainer = styled.SafeAreaView`
 export const Container = styled.View`
   flex: 1;
   background-color: ${Theme.colors.monoLight200};
-  padding: 10px 25px;
+  padding: 50px 25px 2px 25px;
+  position: relative;
 `;
 
 export const Txt = styled.Text`
@@ -28,6 +29,10 @@ export const MediumTxt = styled(Txt)`
 `;
 
 export const LargeTxt = styled(Txt)`
+  font-size: ${`${Theme.fonts.xl}px`};
+`;
+
+export const LargerTxt = styled(Txt)`
   font-size: ${`${Theme.fonts.xxl}px`};
 `;
 
@@ -40,4 +45,8 @@ export const TxtBolder = styled(TxtBold)`
 
 export const VeryBold = styled(Txt)`
   font-size: ${`${Theme.fonts.mega}px`};
+`;
+
+export const BoldMediumTxt = styled(TxtBold)`
+  font-size: ${`${Theme.fonts.xl}px`};
 `;

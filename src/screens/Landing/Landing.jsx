@@ -1,8 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import { Container, Txt, TxtBold } from "./LandingStyles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Txt,
+  TxtBold,
+  TxtBolder,
+  MediumTxt,
+  BoldMediumTxt,
+  LargerTxt,
+  LargeTxt,
+} from "./LandingStyles";
 import { Calendar } from "../../components/calendar/Calendar";
-import { Tasks } from "../../components/tasks/Tasks";
+import { FloatingButton, Tasks } from "../../components/tasks/Tasks";
 import { CreateTaskModal } from "../../components/modals/createTaskModal/CreateTaskModal";
 import { TimePickerModal } from "../../components/modals/timePickerModal/TimePickerModal";
 import DateCard from "../../components/calendar/DateCard";
@@ -10,6 +20,9 @@ import Scroll, { DoubleScroller } from "../../components/scroller/Scroller";
 import { TaskItem } from "../../components/tasks/TaskItem";
 import Glossary from "../Glossary/Glossary";
 import StartSessionModal from "../../components/modals/startSessionModal/StartSessionModal";
+import { AddTaskImage } from "../../components/tasks/AddTaskImage";
+import { TasksList } from "../../components/tasks/TasksList";
+import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 const DUMMY_TASKS = [
   { title: "Task 1", key: "one" },
@@ -32,8 +45,52 @@ export default function Landing() {
     useState(false);
   const [showTimePickerModal, setShowTimePickerModal] = useState(false);
   const [showStartSessionModal, setShowStartSessionModal] = useState(false);
-  const [selectedHourState, setSelectedHourState] = useState("03");
-  const [selectedMinuteState, setSelectedMinuteState] = useState("30");
+  const [selectedHourState, setSelectedHourState] = useState("00");
+  const [selectedMinuteState, setSelectedMinuteState] = useState("00");
+  const [enteredTasksState, setEnteredTasksState] = useState([]);
+  const [chooseTasksState, setChooseTasksState] = useState(false);
+
+  const getData = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("addedTasks");
+        resolve(jsonValue != null ? JSON.parse(jsonValue) : null);
+      } catch (e) {
+        // error reading value
+      }
+    });
+  };
+
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("addedTasks", jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  const initFxn = async () => {
+    const enteredTasks = await getData();
+    // console.log({ enteredTasksVal: enteredTasks ?? [], enteredTasks });
+    setEnteredTasksState(enteredTasks ?? []);
+  };
+  useEffect(() => {
+    initFxn();
+  }, []);
+
+  const onAddNewTasks = (val) => {
+    setEnteredTasksState((prevState) => {
+      const updatedEnteredTasks = [
+        ...prevState,
+        { ...val, key: Math.random().toString() },
+      ];
+      storeData(updatedEnteredTasks);
+      return updatedEnteredTasks;
+    });
+    setSelectedHourState("00");
+    setSelectedMinuteState("00");
+  };
 
   const changeHourHandler = (val) => {
     setSelectedHourState(val);
@@ -55,22 +112,51 @@ export default function Landing() {
     setShowStartSessionModal((prevState) => !prevState);
   };
 
-  return <Glossary />;
+  // return <Glossary />;
   return (
     <Container>
-      <Txt>A clean slate!</Txt>
-      <TxtBold>Let's find something to do...</TxtBold>
+      <Txt>
+        {enteredTasksState.length >= 1
+          ? "Looks like there’s a lot to be done"
+          : "A clean slate!"}
+      </Txt>
+      <LargeTxt>
+        {enteredTasksState.length >= 1
+          ? "What shall we start with?"
+          : "Let's find something todo..."}
+      </LargeTxt>
       <Calendar />
-      <Tasks
-        toggleCreateTaskModal={toggleCreateTaskModalHandler}
-        toggleStartSessionModal={toggleStartSessionModalHandler}
-      />
+      <View
+        style={{
+          flex: 1,
+          // borderWidth: 1,
+          // borderColor: "red",
+          position: "relative",
+          marginTop: 40,
+        }}
+      >
+        {enteredTasksState.length >= 1 ? (
+          <TasksList
+            newTasks={enteredTasksState}
+            chooseTasksState={chooseTasksState}
+            setChooseTasksState={setChooseTasksState}
+          />
+        ) : (
+          <AddTaskImage onPress={toggleCreateTaskModalHandler} />
+        )}
+        <FloatingButton
+          toggleCreateTaskModal={toggleCreateTaskModalHandler}
+          chooseTasksState={chooseTasksState}
+        />
+      </View>
+
       <CreateTaskModal
         toggleCreateTaskModal={toggleCreateTaskModalHandler}
         visible={showCreateTaskModalState}
         toggleTimePickerModal={toggleTimePickerModalHandler}
         hour={selectedHourState}
         minute={selectedMinuteState}
+        onAddNewTasks={onAddNewTasks}
       />
       <TimePickerModal
         visible={showTimePickerModal}
@@ -78,13 +164,13 @@ export default function Landing() {
         onChangeHour={changeHourHandler}
         onChangeMinute={changeMinuteHandler}
       />
-      <StartSessionModal
+      {/* <StartSessionModal
         toggleTimePickerModal={toggleTimePickerModalHandler}
         hour={selectedHourState}
         minute={selectedMinuteState}
         visible={showStartSessionModal}
         toggleStartSessionModal={toggleStartSessionModalHandler}
-      />
+      /> */}
     </Container>
   );
 }

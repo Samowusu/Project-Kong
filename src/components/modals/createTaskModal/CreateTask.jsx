@@ -8,7 +8,15 @@ CreateTask.defaultProps = {
   minute: "30",
   toggleTimePickerModalHandler: () => console.log("toggle time handler"),
 };
-export function CreateTask({ hour, minute, toggleTimePickerModalHandler }) {
+export function CreateTask({
+  hour,
+  minute,
+  toggleTimePickerModalHandler,
+  titleValue,
+  onChangeTitle,
+  noteValue,
+  onChangeNote,
+}) {
   const [showNoteInputState, setShowNoteInputState] = useState(false);
 
   // const toggleCreateTaskModalHandler = () => {
@@ -23,13 +31,20 @@ export function CreateTask({ hour, minute, toggleTimePickerModalHandler }) {
   return (
     <>
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Title" style={styles.inputTitleText} />
+        <TextInput
+          placeholder="Title"
+          style={styles.inputTitleText}
+          value={titleValue}
+          onChangeText={(title) => onChangeTitle(title)}
+        />
         {showNoteInputState && (
           <TextInput
             placeholder="Enter note..."
             style={styles.inputNotesText}
             multiline={true}
             numberOfLines={4}
+            value={noteValue}
+            onChangeText={(note) => onChangeNote(note)}
           />
         )}
       </View>
@@ -43,20 +58,17 @@ export function CreateTask({ hour, minute, toggleTimePickerModalHandler }) {
           </View>
         </Pressable>
       )}
-      <Pressable
-        onPress={() => setShowNoteInputState((prevState) => !prevState)}
-      >
-        <View style={styles.durationContainer}>
-          <Pressable onPress={toggleTimePickerModalHandler}>
-            <View style={styles.duration}>
-              <Text style={styles.durationText}>Duration</Text>
-              <Text style={styles.timerText}>
-                {hour}·{minute}
-              </Text>
-            </View>
-          </Pressable>
-        </View>
-      </Pressable>
+
+      <View style={styles.durationContainer}>
+        <Pressable onPress={toggleTimePickerModalHandler}>
+          <View style={styles.duration}>
+            <Text style={styles.durationText}>Duration</Text>
+            <Text style={styles.timerText}>
+              {hour}·{minute}
+            </Text>
+          </View>
+        </Pressable>
+      </View>
     </>
   );
 }
@@ -69,7 +81,7 @@ const styles = StyleSheet.create({
   },
 
   inputTitleText: {
-    color: Theme.colors.secondaryDark,
+    color: Theme.colors.secondaryDark200,
     fontSize: Theme.fonts.l,
     fontFamily: "Poppins_500Medium",
     // borderBottomColor: "rgba(112, 112, 112, 0.19)",
@@ -103,16 +115,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   duration: {
-    width: 150,
+    width: 190,
     borderColor: Theme.colors.secondaryDark200,
     borderWidth: 1,
-    borderRadius: 30,
+    borderRadius: 25,
     paddingLeft: 20,
+    paddingTop: 10,
+    backgroundColor: Theme.colors.monoLight200,
   },
   durationText: {
     color: "rgba(0, 0, 0, 0.27)",
     fontFamily: "Poppins_500Medium",
-    fontSize: Theme.fonts.m,
+    fontSize: Theme.fonts.s,
   },
   timerText: {
     color: Theme.colors.secondaryDark200,

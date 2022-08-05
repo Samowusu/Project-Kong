@@ -12,7 +12,7 @@ BaseModal.defaultProps = {
   modalHeight: 2,
   title: "Action Modal",
   duration: false,
-  buttons: false,
+  buttons: true,
   firstButtonText: "first button",
   secondButtonText: "second button",
 };
@@ -29,6 +29,7 @@ export function BaseModal({
   buttons,
   firstButtonText,
   secondButtonText,
+  onPressSecondButton,
 }) {
   const disableModalHandler = () => {
     toggleModal();
@@ -46,21 +47,28 @@ export function BaseModal({
       backdropOpacity={duration ? 0.6 : 0}
     >
       <View style={styles.modalContainer(modalHeight, duration)}>
-        <View style={styles.titleTextContainer}>
-          <Text style={styles.titleText}>{title}</Text>
-          {duration && (
-            <Text
-              style={{
-                ...styles.titleText,
-                color: Theme.colors.secondaryDark200,
-              }}
-            >
-              ·select duration
-            </Text>
-          )}
+        <View
+          style={{
+            backgroundColor: Theme.colors.monoLight,
+            flex: 3,
+            borderRadius: 50,
+          }}
+        >
+          <View style={styles.titleTextContainer}>
+            <Text style={styles.titleText}>{title}</Text>
+            {duration && (
+              <Text
+                style={{
+                  ...styles.titleText,
+                  color: Theme.colors.secondaryDark200,
+                }}
+              >
+                ·select duration
+              </Text>
+            )}
+          </View>
+          <View style={styles.modalContents}>{children}</View>
         </View>
-        <View style={styles.modalContents}>{children}</View>
-
         {buttons && (
           <View style={styles.buttonsContainer}>
             <Pressable onPress={disableModalHandler}>
@@ -70,7 +78,7 @@ export function BaseModal({
                 {firstButtonText}
               </Text>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={onPressSecondButton}>
               <View style={styles.addTaskButton}>
                 <Text style={styles.titleText}>{secondButtonText}</Text>
               </View>
@@ -123,7 +131,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   modalContents: {
-    flex: 7,
+    flex: 1,
     backgroundColor: Theme.colors.monoLight,
     // borderWidth: 2,
     // borderColor: "black",
@@ -134,6 +142,8 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flex: 1,
+    maxHeight: 80,
+
     // borderRadius: 50,
     justifyContent: "space-between",
     alignItems: "center",

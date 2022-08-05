@@ -3,7 +3,7 @@ import { Theme } from "../../../config/theme";
 import {
   SmallTxt,
   TxtBolder,
-  LargeTxt,
+  LargerTxt,
 } from "../../../screens/Landing/LandingStyles";
 import ArrowIcon from "../../../../assets/svgs/arrowIcon";
 import moment from "moment";
@@ -91,14 +91,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
-    marginTop: 50,
   },
   tasksContainer: {
     flex: 3,
   },
 
   durationContainer: {
-    flex: 0.7,
+    flex: 1,
   },
   durationWrapper: {
     flex: 1,
