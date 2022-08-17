@@ -56,7 +56,6 @@ export function Tasks({
   const togglePlayButton = (value) => {
     console.log("fired");
     setChooseTasksState(value);
-    console.log({ chooseTasksState });
   };
 
   return (
@@ -125,11 +124,12 @@ export function FloatingButton({
       }}
       pointerEvents={"box-none"}
     >
-      {chooseTasksState ? (
+      {chooseTasksState && (
         <CustomButton onPress={toggleStartSessionModal}>
           <PlayIcon />
         </CustomButton>
-      ) : (
+      )}
+      {!chooseTasksState && (
         <CustomButton onPress={toggleCreateTaskModal}>
           <AddIcon />
         </CustomButton>

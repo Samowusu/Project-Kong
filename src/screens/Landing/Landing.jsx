@@ -19,10 +19,11 @@ import DateCard from "../../components/calendar/DateCard";
 import Scroll, { DoubleScroller } from "../../components/scroller/Scroller";
 import { TaskItem } from "../../components/tasks/TaskItem";
 import Glossary from "../Glossary/Glossary";
-import StartSessionModal from "../../components/modals/startSessionModal/StartSessionModal";
+import { StartSessionModal } from "../../components/modals/startSessionModal/StartSessionModal";
 import { AddTaskImage } from "../../components/tasks/AddTaskImage";
 import { TasksList } from "../../components/tasks/TasksList";
 import { get } from "react-native/Libraries/Utilities/PixelRatio";
+import useSelectTasks from "../../hooks/useSelectTasks";
 
 const DUMMY_TASKS = [
   { title: "Task 1", key: "one" },
@@ -49,6 +50,8 @@ export default function Landing() {
   const [selectedMinuteState, setSelectedMinuteState] = useState("00");
   const [enteredTasksState, setEnteredTasksState] = useState([]);
   const [chooseTasksState, setChooseTasksState] = useState(false);
+
+  const [selectedTasksKeys] = useSelectTasks();
 
   const getData = () => {
     return new Promise(async (resolve, reject) => {
@@ -79,6 +82,13 @@ export default function Landing() {
     initFxn();
   }, []);
 
+  // when all tasks are deleted, switch the floating button from "play" to "add"
+  useEffect(() => {
+    if (enteredTasksState?.length < 1) {
+      setChooseTasksState(false);
+    }
+  }, [enteredTasksState]);
+
   const onAddNewTasks = (val) => {
     setEnteredTasksState((prevState) => {
       const updatedEnteredTasks = [
@@ -90,6 +100,23 @@ export default function Landing() {
     });
     setSelectedHourState("00");
     setSelectedMinuteState("00");
+  };
+
+  const onDeleteTasks = (keys) => {
+    setEnteredTasksState((prevTasks) => {
+      let deletedTasksArray = [];
+      let undeletedTasksArray = [];
+      for (let i = 0; i < prevTasks?.length; i++) {
+        const deleted = keys.includes(prevTasks[i].key);
+        if (deleted) {
+          deletedTasksArray.push(prevTasks[i]);
+        } else {
+          undeletedTasksArray.push(prevTasks[i]);
+        }
+      }
+      storeData(undeletedTasksArray);
+      return undeletedTasksArray;
+    });
   };
 
   const changeHourHandler = (val) => {
@@ -116,12 +143,12 @@ export default function Landing() {
   return (
     <Container>
       <Txt>
-        {enteredTasksState.length >= 1
+        {enteredTasksState?.length >= 1
           ? "Looks like there’s a lot to be done"
           : "A clean slate!"}
       </Txt>
       <LargeTxt>
-        {enteredTasksState.length >= 1
+        {enteredTasksState?.length >= 1
           ? "What shall we start with?"
           : "Let's find something todo..."}
       </LargeTxt>
@@ -135,11 +162,12 @@ export default function Landing() {
           marginTop: 40,
         }}
       >
-        {enteredTasksState.length >= 1 ? (
+        {enteredTasksState?.length >= 1 ? (
           <TasksList
             newTasks={enteredTasksState}
             chooseTasksState={chooseTasksState}
             setChooseTasksState={setChooseTasksState}
+            onDelete={onDeleteTasks}
           />
         ) : (
           <AddTaskImage onPress={toggleCreateTaskModalHandler} />
@@ -176,3 +204,20 @@ export default function Landing() {
 }
 
 const styles = StyleSheet.create({});
+
+//my deleting tasks logic
+
+// let deletedTasksArray = [];
+// let undeletedTasksArray = [];
+// for (i = 0; i < prevTasks?.length; i++) {
+//   const deleted = keys.includes(prevTasks[i].key);
+//   if (deleted) {
+//     deletedTasksArray.push(prevTasks[i]);
+//   } else {
+//     undeletedTasksArray.push(prevTasks[i]);
+//   }
+// }
+// storeData(undeletedTasksArray);
+// return undeletedTasksArray;
+
+// const results = tasks.filter((task)=> keys.includes(task.key))

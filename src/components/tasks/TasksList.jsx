@@ -40,24 +40,13 @@ export function TasksList({
   onTogglePlayButton,
   chooseTasksState,
   setChooseTasksState,
+  onDelete,
 }) {
   const [tasksDataState, setTasksDataState] = useState(newTasks);
   useEffect(() => {
     setTasksDataState(newTasks);
   }, [newTasks]);
 
-  //   const [selectedTasksState, setSelectedTasksState] = useState([]);
-
-  //   const selectTaskHandler = (value) => {
-  //     setSelectedTasksState((prevState) => {
-  //       const found = prevState.find((taskId) => taskId === value);
-  //       if (found) {
-  //         return prevState.filter((taskId) => taskId !== found);
-  //       } else {
-  //         return [...prevState, value];
-  //       }
-  //     });
-  //   };
   const [selectedTasksState, selectTaskHandler, setSelectedTasksState] =
     useSelectTasks();
 
@@ -90,7 +79,7 @@ export function TasksList({
           {/* Display 'select' or 'delete/cancel' buttons */}
           {chooseTasksState ? (
             <View style={styles.deleteButtonsContainer}>
-              <Pressable>
+              <Pressable onPress={() => onDelete(selectedTasksState)}>
                 <TxtBold color={Theme.colors.crimson}>DELETE</TxtBold>
               </Pressable>
               <DotIcon />
