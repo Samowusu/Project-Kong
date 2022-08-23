@@ -48,7 +48,7 @@ export default function Glossary() {
   const toggleCreateTaskModalHandler = () => {
     setShowCreateTaskModalState((prevState) => !prevState);
   };
-  return <Tasks />;
+  return <Countdown />;
   return (
     <ScrollView>
       <CustomButton />

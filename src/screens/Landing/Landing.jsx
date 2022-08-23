@@ -50,8 +50,10 @@ export default function Landing() {
   const [selectedMinuteState, setSelectedMinuteState] = useState("00");
   const [enteredTasksState, setEnteredTasksState] = useState([]);
   const [chooseTasksState, setChooseTasksState] = useState(false);
+  const [startSessionTasksState, setStartSessionTasksState] = useState([]);
 
-  const [selectedTasksKeys] = useSelectTasks();
+  const [selectedTasksState, selectTaskHandler, setSelectedTasksState] =
+    useSelectTasks();
 
   const getData = () => {
     return new Promise(async (resolve, reject) => {
@@ -104,15 +106,10 @@ export default function Landing() {
 
   const onDeleteTasks = (keys) => {
     setEnteredTasksState((prevTasks) => {
-      let deletedTasksArray = [];
       let undeletedTasksArray = [];
       for (let i = 0; i < prevTasks?.length; i++) {
         const deleted = keys.includes(prevTasks[i].key);
-        if (deleted) {
-          deletedTasksArray.push(prevTasks[i]);
-        } else {
-          undeletedTasksArray.push(prevTasks[i]);
-        }
+        if (!deleted) undeletedTasksArray.push(prevTasks[i]);
       }
       storeData(undeletedTasksArray);
       return undeletedTasksArray;
@@ -139,7 +136,16 @@ export default function Landing() {
     setShowStartSessionModal((prevState) => !prevState);
   };
 
-  // return <Glossary />;
+  const onPressPlay = (selectedTasks) => {
+    const startSessionTasks = enteredTasksState?.filter((task) =>
+      selectedTasks.includes(task.key)
+    );
+    console.log({ startSessionTasks });
+    setStartSessionTasksState(startSessionTasks);
+    toggleStartSessionModalHandler();
+  };
+
+  return <Glossary />;
   return (
     <Container>
       <Txt>
@@ -168,6 +174,9 @@ export default function Landing() {
             chooseTasksState={chooseTasksState}
             setChooseTasksState={setChooseTasksState}
             onDelete={onDeleteTasks}
+            selectTaskHandler={selectTaskHandler}
+            selectedTasksState={selectedTasksState}
+            setSelectedTasksState={setSelectedTasksState}
           />
         ) : (
           <AddTaskImage onPress={toggleCreateTaskModalHandler} />
@@ -175,6 +184,7 @@ export default function Landing() {
         <FloatingButton
           toggleCreateTaskModal={toggleCreateTaskModalHandler}
           chooseTasksState={chooseTasksState}
+          toggleStartSessionModal={() => onPressPlay(selectedTasksState)}
         />
       </View>
 
@@ -192,13 +202,14 @@ export default function Landing() {
         onChangeHour={changeHourHandler}
         onChangeMinute={changeMinuteHandler}
       />
-      {/* <StartSessionModal
+      <StartSessionModal
         toggleTimePickerModal={toggleTimePickerModalHandler}
         hour={selectedHourState}
         minute={selectedMinuteState}
         visible={showStartSessionModal}
         toggleStartSessionModal={toggleStartSessionModalHandler}
-      /> */}
+        selectedTasks={startSessionTasksState}
+      />
     </Container>
   );
 }

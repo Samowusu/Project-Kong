@@ -41,14 +41,14 @@ export function TasksList({
   chooseTasksState,
   setChooseTasksState,
   onDelete,
+  selectedTasksState,
+  selectTaskHandler,
+  setSelectedTasksState,
 }) {
   const [tasksDataState, setTasksDataState] = useState(newTasks);
   useEffect(() => {
     setTasksDataState(newTasks);
   }, [newTasks]);
-
-  const [selectedTasksState, selectTaskHandler, setSelectedTasksState] =
-    useSelectTasks();
 
   //Item to render in the draggable list
   const renderItem = ({ item, drag, isActive }) => {

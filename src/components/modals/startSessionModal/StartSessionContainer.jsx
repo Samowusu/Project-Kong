@@ -50,7 +50,7 @@ export function StartSessionContainer({
   return (
     <View style={styles.container}>
       <View style={styles.tasksContainer}>
-        <StartSessionBubble header={false} />
+        <StartSessionBubble header={false} selectedTasks={selectedTasks} />
       </View>
 
       {/* --TASK DURATION-- */}

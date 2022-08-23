@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
 
 export const TitleTextContainer = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
 `;

@@ -6,7 +6,7 @@ import { Theme } from "../../config/theme";
 import useTimeToDecimal from "../../hooks/useTimeToDecimal";
 
 const { height } = Dimensions.get("window");
-const animationHeight = height / 2;
+const animationHeight = height / 2.5;
 
 Countdown.defaultProps = {
   hour: "03",
@@ -21,15 +21,17 @@ export function Countdown({ hour, minute }) {
         borderWidth: 1,
         borderColor: "red",
         position: "relative",
+        alignItems: "center",
       }}
     >
       <CountdownAnimation />
       <View
         style={{
           alignItems: "center",
+          // borderWidth: 1,
+          // borderColor: "blue",
           position: "absolute",
-          bottom: "30%",
-          left: "35%",
+          bottom: "20%",
         }}
       >
         <VeryBold color={Theme.colors.secondary}>{timeLeft}</VeryBold>

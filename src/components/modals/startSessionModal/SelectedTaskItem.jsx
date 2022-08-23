@@ -51,7 +51,9 @@ export function SelectedTaskItem({
         {showTaskDuration ? (
           <TitleTextContainer>
             <Txt color={Theme.colors.monoLight}>{title}</Txt>
-            {showTaskDuration && <DotIcon color={Theme.colors.monoLight} />}
+            {showTaskDuration && (
+              <DotIcon color={Theme.colors.monoLight} marginHorizontal={8} />
+            )}
             {showTaskDuration && (
               <Txt color={Theme.colors.monoLight}>{taskDuration}h</Txt>
             )}

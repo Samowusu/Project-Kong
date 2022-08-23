@@ -49,7 +49,6 @@ export function StartSessionBubble({
   //       }
   //     });
   //   };
-  const [selectedTasksState, selectTaskHandler] = useSelectTasks();
 
   return (
     <View
@@ -76,16 +75,14 @@ export function StartSessionBubble({
         style={styles.tasksWrapper}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-        {selectedTasks.map((task, index) => (
+        {selectedTasks.map((task) => (
           <SelectedTaskItem
-            key={index}
+            key={task.key}
             hour={task.hour}
             minute={task.minute}
             notes={task.notes}
             title={task.title}
             showTaskDuration={showTaskDuration}
-            selected={selectedTasksState.includes(task.title)}
-            checkTaskHandler={() => selectTaskHandler(task.title)}
           />
         ))}
       </ScrollView>

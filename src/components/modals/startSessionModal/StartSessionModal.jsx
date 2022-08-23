@@ -56,14 +56,14 @@ export function StartSessionModal({
   return (
     <BaseModal
       title={"start session"}
-      modalHeight={1.2}
+      modalHeight={1.1}
       buttons
       firstButtonText={"cancel"}
       secondButtonText={"start session"}
       visible={visible}
       toggleModal={toggleStartSessionModal}
     >
-      <StartSessionContainer />
+      <StartSessionContainer selectedTasks={selectedTasks} />
     </BaseModal>
   );
 }
